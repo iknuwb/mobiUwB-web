@@ -1,0 +1,40 @@
+/* Obecnie: nic nie robi
+ * W planach: dodanie styli zwiaznych z wydzialem/uwb - jakies logo itp.
+ * Zaczalem pisac, ale mi sie odechcialo; do zrobienia w najblizszym czasie ;)
+ */
+#start #app-top 
+{
+    /*background-image: url(images/uwb-logo.png);*/
+    background-repeat: no-repeat;
+    height: 62px;
+}
+
+#logo 
+{
+    width: 150px;
+    margin: 0 auto;
+}
+
+
+#start h1.glowny {
+    /*text-shadow: 0.1em 0.1em 0.2em #5B92BF;*/
+    font-size: 120%;
+    margin: 7px 0 2px 0;
+}
+
+#start h2
+{
+    font-size: 130%;
+    margin: 5px 0 2px 0;
+}
+.odnosniki a {
+    width: 99%;
+}
+
+.adres {
+    text-align:center;
+}
+
+.jednostka {
+    font-size: 60%;
+}
