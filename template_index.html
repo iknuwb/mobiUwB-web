@@ -1,0 +1,360 @@
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta charset="utf-8" />
+	<title tal:content="pelny_tytul">mobiUwB</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<!-- jQuery i jQuery Mobile -->
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<link rel="stylesheet" href="jquery.mobile-1.3.1.min.css" />
+	<script src="jquery.mobile-1.3.1.min.js"></script>
+
+        <!-- orangebox - lightbox -->
+        <!--
+        <script type="text/javascript" src="js/orangebox.min.js"></script>
+        <link rel="stylesheet" href="css/orangebox.css" type="text/css" />
+        -->
+        <!-- fancybox - lightbox -->
+        
+	<script src="./libs/Fancybox/jquery.fancybox.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="./libs/Fancybox/jquery.fancybox.css" media="screen" />
+	<script>
+            $(document).ready(function() {
+                $('a[rel="lightbox"]').fancybox();
+            });
+	</script>
+
+
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <!-- dodatkowe funkcje i style -->
+	<script src="js/custom-functions.js"></script>
+	<link rel="stylesheet" href="custom-style.css" />
+<script>
+
+// globalne zmienne
+
+// podstawowy adres API
+var apiUrl = 'http://ii.uwb.edu.pl/serwis/?/json/';
+
+// ilość pobieranych rekordów przy pierwszym odwiedzeniu strony
+var numRecordsDef = 6;
+
+// ilość pobieranych rekordów po kliknięciu w "załaduj więcej"
+var numRecordsNew = 6;
+
+// ilość już pobranych rekordów - potrzebne przy obliczaniu offsetu
+var numLoaded = 0;
+
+// kod obecnie załadowanej kategorii
+// domyślnie puste, bo żadna strona nie była ładowana
+var currCat = "";
+
+// tytuły stron o poszczególnych "kodach"
+// potrzebne do ustawiania tytułów (h1) poszczególnych stron
+// niestety nie ma tego w json, więc robimy na sztywno w konficuracji
+var titles = {};
+titles['io'] = "Aktualności";
+titles['sz'] = "Zajęcia odwołane";
+titles['bk'] = "Biuro karier";
+titles['sk'] = "Szkolenia i praktyki";
+titles['so'] = "Sprawy ogólne";
+
+// nazwy polskich miesięcy
+var months = new Array("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień");
+
+function loadData(apiUrl, itemsNum, startFrom)
+{
+    // ostateczna forma url-a - po dodaniu offsetu i startu
+    var finalUrl = apiUrl;
+
+    // przechowuje elementy z newsami/informacjami
+    //var items = [];
+    // będziemy zwracać string z całą treścią
+    var items = "";
+
+    if(itemsNum != null)
+    {
+        finalUrl = apiUrl + '/' + itemsNum;
+        if(startFrom != null)
+        {
+            finalUrl += '/' + startFrom;
+        }
+    }
+    //console.log("final url:"+finalUrl);
+
+    // ajax zamiast getJson, bo trzeba zapytanie wyslac synchronicznie
+    $.ajax({
+        dataType: "json",
+        url: finalUrl,
+        success: function(data){
+
+    $.each(data, 
+        function(key, val) {
+            //var d = new that.Date(val.data);
+            // rozdzielamy string z data na tablice z konkretnymi czesciami
+            var a = (val.data).split(/[^0-9]/);
+            //var d=new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
+
+            // dzień nazwaMiesiąca rok
+            var dateString = a[2] + ' ' + months[a[1]- 1] + " " + a[0]; 
+
+            // wrzuca do tablicy HTML z divami "collapsible" (pozwalających na zwijanie i rozwijanie
+            //items.push('<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data" data-inset="true">' + d.toLocaleDateString()+ '</h4><div class="title">' + val.tytul + '</div><div class="tresc">' + val.tresc + '</div></div>');          
+            items += '<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data" data-inset="true">' + dateString + '</h4><div class="title">' + val.tytul + '</div><div class="tresc">' + val.tresc + '</div></div>';          
+
+        }); 
+    }, 
+    // trzeba wywoływać synchronicznie, bo inaczej funkcja zwroci pusta tablice; 
+    async: false
+    });  
+
+
+    return items;
+}
+
+// przechwytuje request do ladowania strony
+$(document).bind( "pagebeforechange", function( e, data ) {
+	if ( typeof data.toPage === "string" ) {
+	        // ladujemy tylko wybrane url-e 
+		var u = $.mobile.path.parseUrl( data.toPage ),
+			re = /^#sekcja/;
+		if ( u.hash.search(re) !== -1 ) {
+		        // wywolujemy funkcje odpowiedzialna za ladownie tresci 
+			loadPage( u, data.options );
+
+			// niech jmq nie miesza sie w ladowanie tresci
+			e.preventDefault();
+		}
+	}
+});
+
+// ładuje treść konkretnej strony i wrzuca do DOM-u 
+function loadPage( urlObj, options )
+{
+	var categoryName = urlObj.hash.replace( /.*strona=/, "" ),
+
+		// gdzie bedziemy wrzucac dane
+		// (domyslnie = strona)
+		pageSelector = urlObj.hash.replace( /\?.*$/, "" );
+
+
+		// dostęp do diva, gdzie będziemy wrzucać treść
+		var $page = $( pageSelector ),
+
+			// Get the header for the page.
+
+			// header, żeby móc zmieniać tytuły
+			$header = $page.children( ":jqmData(role=header)" ),
+
+			// content - to tu będziemy dorzucać treść
+			$content = $page.children( ":jqmData(role=content)" ),
+
+			// treść, którą będziemy dorzucać
+			// pobieramy najpierw numRecordsDef rekordów
+			markup = loadData(apiUrl+categoryName, numRecordsDef, null);
+
+			// do ładowania od razu całej treści:
+			//markup = loadData('http://ii.uwb.edu.pl/serwis/?/json/'+categoryName, null, null);
+			markup += '<a href="#" data-role="button" class="loadMore">Załaduj więcej</a>';
+
+		// ustawiamy nowy tyuł strony, zależnie od tego, jaką ładujemy stronę
+		$header.find( "h1" ).html( titles[categoryName] );
+
+		// dodajemy data-role do linkow z lightbox
+		//$(markup).find("a[rel^='lightbox']").attr('data-role', 'popup');
+		
+		// wrzucamy treść
+		$content.html( markup );
+
+		// odświeżamy!
+		$page.page();
+
+                // i jeszcze raz!
+                $(pageSelector).trigger('create');
+
+		options.dataUrl = urlObj.href;
+
+		// ustalamy, ile danych mamy już pobranych
+		numLoaded = numRecordsDef;
+
+		// ustawiamy kod obecnie załadowanej kategorii
+		// potrzebne przy "ładuj więcej", bo musimy wiedzieć, jakie dane pobierać
+		currCat = categoryName;
+
+		// no i w końcu robimy tę #$^%# stronę
+		$.mobile.changePage( $page, options );
+}
+
+// obsługa eventu po kliknięciu w loadMore
+// trzeba korzystać z pageshow a nie pageinit, bo różne strony będą wielokrotnie ładowane
+$(document).on('pageshow', function(){
+    $('a.loadMore').bind('click', function(e) {
+        //console.log('loadMore event');
+        // pobieramy dane od miejsca numLoaded (ilości już załadowanych rekordów)
+        var newData = loadData(apiUrl+currCat, numRecordsNew, numLoaded);
+
+        // nowe dane wrzucamy przed przyciskiem ładowania więcej treści
+        $("a.loadMore").before(newData);//.trigger('create');
+
+        // trzeba odświeżyć style, żeby nowo załadowane rekordy miały właściwy styl
+        $("#sekcja").trigger('create');
+
+        // załadowaliśmy więcej treści, uaktualniamy zmienną z ilością pobranych danych
+        numLoaded += numRecordsNew;
+    })
+}
+);
+
+
+// funkcja odpowiedzialna za ladownanie mapy z api google
+function initMap(lat,lng) {
+    var latlng = new google.maps.LatLng(lat, lng);
+    var myOptions = {
+      zoom: 16,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+
+    var marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        title: "Budynek wydziału"
+    });
+    google.maps.event.trigger(map, 'resize')
+}
+
+// funkcja blokująca zoomowanie double clickiem
+(function($) {
+  $.fn.nodoubletapzoom = function() {
+      $(this).bind('touchstart', function preventZoom(e) {
+        var t2 = e.timeStamp
+          , t1 = $(this).data('lastTouch') || t2
+          , dt = t2 - t1
+          , fingers = e.originalEvent.touches.length;
+        $(this).data('lastTouch', t2);
+        if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+
+        e.preventDefault(); // double tap - prevent the zoom
+        // also synthesize click events we just swallowed up
+        $(this).trigger('click').trigger('click');
+      });
+  };
+})(jQuery);
+
+// zaladowanie mapy - mozna dopiero, jak DOM jest calkiem zaladowany
+// inaczej nie dostaniemy danych od google
+//$('#kontakt').on('pageshow',function(event){
+$(document).on('pageshow',function(event){
+    initMap(53.13051,23.143811);
+    $(document).nodoubletapzoom();
+
+});
+
+</script>
+
+</head>
+
+<body>
+
+<!-- start/ -->
+<!-- strona główna - menu i linki w stopce -->
+<div data-role="page" id="start">
+
+    <div data-role="header" data-theme="d" id="app-top">
+        <h1 class="glowny">mobiUwB </h1>
+        <h2><span tal:content="jednostka" class="jednostka">Instytut/Wydział</span></h2>
+    </div>
+
+    <!-- content/ -->
+    <div data-role="content" data-theme="b">
+
+        <div id="logo">
+            <img alt="logo" src="images/logo.png" />
+        </div>
+
+        <ul data-role="listview" data-inset="true">
+            <li><a href="#sekcja?strona=io" class="aktualnosci">Aktualności</a></li> 
+            <li><a href="#sekcja?strona=sz" class="sz">Zajęcia odwołane</a>
+                <span class="ui-li-count" id="licznik_sz">0</span>
+            </li>
+            <li><a href="#sekcja?strona=so" class="so">Sprawy ogólne</a></li>
+            <li><a href="#sekcja?strona=bk" class="bk">Biuro karier</a></li>
+            <li><a href="#sekcja?strona=sk" class="sk">Szkolenia i Praktyki</a></li>
+            <li><a href="#plan">Plan zajęć</a></li>
+        </ul>
+
+    </div>
+    <!-- /content -->
+
+    <!-- navbar/ -->
+    <!-- Linki w "stopce" -->
+    <div data-role="navbar" data-theme="b">
+        <ul>
+            <li><a href="#kontakt" data-rel="dialog" data-icon="info" >Kontakt</a></li>
+            <li><a href="oprogramie.html"  data-rel="dialog" data-transition="pop" data-icon="info" >O programie</a></li>
+        </ul>
+    </div>
+    <!-- /navbar -->
+    
+    
+</div> 
+<!-- /start -->
+
+<!-- /kontakt -->
+<div data-role="page" id="kontakt" class="page-map" style="width:100%; height:100%;" data-close-btn="right" >
+    <div data-role="header" data-theme="d"><h1>Kontakt</h1></div>
+    <div data-role="content" style="padding:0;">
+        <div id="map_canvas" style="width:500px; height:300px;margin:auto;">
+        </div>
+        <p id="text" style="padding: 0 5px 3px 0">
+        <div class="adres">
+        <strong>Adres:</strong><br/>
+        15-887 Białystok<br/>
+        ul. Sosnowa 64
+        </div>
+        <a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px">sekretariat@ii.uwb.edu.pl</a>
+        <a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px">Tel: (085) 745-76-62</a>        </p>
+    </div>
+</div>
+<!-- /kontakt -->
+
+<!-- sekcja/ -->
+<!-- miejsce, gdzie bedzie ladowana dynamiczna tresc -->
+<div id="sekcja" data-role="page">
+    <div data-role="header" data-theme="b">
+        <h1></h1>
+        <a href="glowna.php" data-icon="home" data-iconpos="left">Główna</a>
+    </div>
+
+    <div data-role="content"></div>
+</div>
+<!-- /sekcja -->
+
+<!-- plan/ -->
+<div data-role="page" id="plan">
+    <div data-role="header" data-theme="b">
+        <h1>Plan zajęć</h1>
+        <a href="./glowna.php" data-icon="home" data-iconpos="left">Główna</a>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="true" data-divider-theme="d">
+            <li data-role="list-divider">Studia I stopnia</li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st1r1_19032013.pdf" data-ajax="false">1 rok</a></li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st1r2p_07032013.pdf" data-ajax="false">2 rok (studia przemienne)</a></li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st1r2_19032013.pdf"  data-ajax="false">2 rok</a></li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st1r3p_07032013.pdf" data-ajax="false">3 rok (studia przemienne)</a></li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st1r3_01032013.pdf"  data-ajax="false">3 rok</a></li>
+            <li data-role="list-divider">Studia II stopnia</li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st2r1_07032013.pdf" data-ajax="false">Rok 1</a></li>
+            <li><a href="http://ii.uwb.edu.pl/pliki/file/2012_2013/plany/st2r2_19022013.pdf" data-ajax="false">Rok 2</a></li>
+        </ul>
+    </div>
+
+</div>
+<!-- /plan -->
+
+</body>
+</html>
