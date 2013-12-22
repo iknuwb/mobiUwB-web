@@ -328,7 +328,7 @@ $(document).on('pageshow',function(event){
 <div id="sekcja" data-role="page">
     <div data-role="header" data-theme="b">
         <h1></h1>
-        <a href="glowna.php" data-icon="home" data-iconpos="left">Główna</a>
+        <tal:block content="structure glowna"></tal:block>
     </div>
 
     <div data-role="content"></div>
@@ -339,7 +339,7 @@ $(document).on('pageshow',function(event){
 <div data-role="page" id="plan">
     <div data-role="header" data-theme="b">
         <h1>Plan zajęć</h1>
-        <a href="glowna.php" data-icon="home" data-iconpos="left">Główna</a>
+        <tal:block content="structure glowna"></tal:block>
     </div>
 
     <div data-role="content">
