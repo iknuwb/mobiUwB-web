@@ -38,7 +38,7 @@
 // globalne zmienne
 
 // podstawowy adres API
-var apiUrl = 'http://ii.uwb.edu.pl/serwis/?/json/';
+var apiUrl = '${apiUrl}';
 
 // ilość pobieranych rekordów przy pierwszym odwiedzeniu strony
 var numRecordsDef = 6;
@@ -223,7 +223,7 @@ function initMap(lat,lng) {
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        title: "Budynek wydziału"
+        title: "${tytul}"
     });
     google.maps.event.trigger(map, 'resize')
 }
@@ -250,7 +250,7 @@ function initMap(lat,lng) {
 // inaczej nie dostaniemy danych od google
 //$('#kontakt').on('pageshow',function(event){
 $(document).on('pageshow',function(event){
-    initMap(53.13051,23.143811);
+    initMap(${dlugosc},${szerokosc});
     $(document).nodoubletapzoom();
 
 });
@@ -274,7 +274,7 @@ $(document).on('pageshow',function(event){
     <div data-role="content" data-theme="b">
 
         <div id="logo">
-            <img alt="logo" src="images/logo.png" />
+            <img alt="logo" src="images/logo.png" tal:attributes="src logo"/>
         </div>
 
         <ul data-role="listview" data-inset="true">
@@ -312,13 +312,13 @@ $(document).on('pageshow',function(event){
         <div id="map_canvas" style="width:500px; height:300px;margin:auto;">
         </div>
         <div id="text" style="padding: 0 5px 3px 0">
-        <div class="adres">
-        <strong>Adres:</strong><br/>
-        15-887 Białystok<br/>
-        ul. Sosnowa 64
-        </div>
-        <a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px">sekretariat@ii.uwb.edu.pl</a>
-        <a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px">Tel: (085) 745-76-62</a>        </div>
+		<div class="adres">
+		<strong>Adres:</strong><br/>
+		<span tal:content="kod">kod</span> <span tal:content="miasto">miasto</span><br/>
+		ul. <span tal:content="ulica">ulica</span> <span tal:content="numer">numer</span>
+		</div>
+        <a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
+        <a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>        </div>
     </div>
 </div>
 <!-- /kontakt -->

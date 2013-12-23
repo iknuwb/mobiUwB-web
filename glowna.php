@@ -5,7 +5,42 @@ session_start();
 $template = new PHPTAL('template_index.html');
 $template->setOutputMode(PHPTAL::HTML5);
 
-/* Zawartość specyficzna dla platform - Android/przeglądarka */
+if (file_exists('config.xml')) {
+    $config = simplexml_load_file('config.xml');	// wczytanie pliku konfiguracyjnego
+	
+	/* Wczytanie danych z pliku konfiguracyjnego */
+	
+	$template->nazwa = $config->jednostka[0]->nazwa;
+	$template->pelny_tytul = $config->jednostka[0]->pelny_tytul;
+	$template->logo = $config->jednostka[0]->logo;
+	
+	$template->apiUrl = $config->jednostka[0]->apiUrl;
+
+// mapa
+	$template->tytul = $config->jednostka[0]->mapa->tytul;
+	$template->dlugosc = $config->jednostka[0]->mapa->wspolrzedne->dlugosc;
+	$template->szerokosc = $config->jednostka[0]->mapa->wspolrzedne->szerokosc;
+	
+// adres
+	$template->kod = $config->jednostka[0]->adres->kod;
+	$template->miasto = $config->jednostka[0]->adres->miasto;
+	$template->ulica = $config->jednostka[0]->adres->ulica;
+	$template->numer = $config->jednostka[0]->adres->numer;
+	
+	$template->email = $config->jednostka[0]->email;
+	
+	$template->mailto = 'mailto:'.$config->jednostka[0]->email;
+	
+	$template->tel1 = $config->jednostka[0]->tel1;
+	
+	$tel = 'tel:';
+	$template->tel1_ = $tel.$config->jednostka[0]->tel1;
+	
+	
+	
+	
+	
+	/* Zawartość specyficzna dla platform - Android/przeglądarka */
 	
 			 /* - Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
 				- Przycisk "Główna"; nie wyświetlany w aplikacji */
@@ -23,14 +58,16 @@ $template->setOutputMode(PHPTAL::HTML5);
 		$template->glowna = '<a href=glowna.php data-icon=home data-iconpos=left>Główna</a>';
 	}
 	
-
-$template->nazwa = "Instytut Informatyki";
-$template->pelny_tytul = 'mobiUwB - Instytut Informatyki';
-
-try {
-    echo $template->execute();
+	try {
+		echo $template->execute();
+	}
+	catch (Exception $e){
+		echo $e;
+	}	
+	
+	
+} else {
+    exit('Nie mozna otworzyc pliku config.xml.');
 }
-catch (Exception $e){
-    echo $e;
-}
+
 ?>
