@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<konfiguracja xmlns="http://ii.uwb.edu.pl/serwis/konfiguracja/czesc2">
+	<opiekun>Dominik Tomaszuk</opiekun>
+	<autorzy>
+		<autor>Artem Barysevich</autor>
+		<autor>Karol Borkowski</autor>
+		<autor>Radosław Piliszek</autor>
+		<autor>Maciej Puchalski</autor>
+		<autor>Łukasz Szeremeta</autor>
+		<autor>Artur Szymański</autor>
+	</autorzy>
+	<jednostka>
+		<nazwa>Instytut Informatyki</nazwa>
+		<pelny_tytul>mobiUwB - Instytut Informatyki</pelny_tytul>
+		<logo>images/logo.png</logo>
+		<apiUrl>http://ii.uwb.edu.pl/api/serwis/?/json/</apiUrl>
+		<sekcje>
+			<sekcja>
+				<id>io</id>
+				<st>Aktualności</st>
+			</sekcja>
+			<sekcja>
+				<id>sz</id>
+				<st>Zajęcia odwołane</st>
+			</sekcja>
+			<sekcja>
+				<id>bk</id>
+				<st>Biuro karier</st>
+			</sekcja>
+			<sekcja>
+				<id>sk</id>
+				<st>Szkolenia i praktyki</st>
+			</sekcja>
+			<sekcja>
+				<id>so</id>
+				<st>Sprawy ogólne</st>
+			</sekcja>
+		</sekcje>
+		<adres>
+			<kod>15-887</kod>
+			<miasto>Białystok</miasto>
+			<ulica>Sosnowa</ulica>
+			<numer>64</numer>
+		</adres>
+		<email>sekretariat@ii.uwb.edu.pl</email>
+		<tel1>+48-85-745-7662</tel1>
+		<tel2></tel2>
+		<fax></fax>
+		<mapa>
+			<tytul>Instytut Informatyki</tytul>
+			<wspolrzedne>
+				<dlugosc>53.13051</dlugosc>
+				<szerokosc>23.143811</szerokosc>
+			</wspolrzedne>
+		</mapa>
+		<plany>
+			<pierwszy_stopien>
+				<plan>
+					<link>"http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem1.pdf</link>
+					<opis>1 rok</opis>
+				</plan>
+				<plan>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem3.pdf</link>
+					<opis>2 rok</opis>
+				</plan>
+				<plan>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem4.pdf</link>
+					<opis>2 rok (studia przemienne)</opis>
+				</plan>
+				<plan>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem5.pdf</link>
+					<opis>3 rok</opis>
+				</plan>
+				<plan>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem6.pdf</link>
+					<opis>3 rok (studia przemienne)</opis>
+				</plan>
+			</pierwszy_stopien>
+			<drugi_stopien>
+				<plan>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st2_sem1.pdf</link>
+					<opis>Rok 1</opis>
+				</plan>
+				<plan>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st2_sem3.pdf</link>
+					<opis>Rok 2</opis>
+				</plan>
+			</drugi_stopien>
+		</plany>
+	</jednostka>
+</konfiguracja>
