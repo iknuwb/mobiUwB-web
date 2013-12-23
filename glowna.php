@@ -1,35 +1,31 @@
 <?php
 require_once './libs/PHPTAL.php';
 
+session_start();
 $template = new PHPTAL('template_index.html');
 $template->setOutputMode(PHPTAL::HTML5);
 
-class Sekcja {
-    public $url;
-    public $id;
-    public $st;
+/* Zawartość specyficzna dla platform - Android/przeglądarka */
+	
+			 /* - Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
+				- Przycisk "Główna"; nie wyświetlany w aplikacji */
+				
+	// isset powinno być szybsze niż porównywanie wartości.
+	if (isset($_SESSION['client'])) {
+		$template->offline = '';
+		$template->glowna = '';
+	}
+	else {
+		$template->offline =
+			'        <!-- offline indicator - wskaźnik stanu połączenia z siecią (online/offline) -->
+	<script src=offline.min.js></script>
+	<link rel=stylesheet href=offline-indicator.css>';
+		$template->glowna = '<a href=glowna.php data-icon=home data-iconpos=left>Główna</a>';
+	}
+	
 
-    function Sekcja($url, $id, $st) {
-        $this->url = $url;
-        $this->id = $id;
-        $this->st = $st;
-    }
-}
-
-$apiUrl = 'http://ii.uwb.edu.pl/api/serwis/?/json';
-$sekcje = array();
-// to pozniej z konfiga
-$sekcje[] = new Sekcja($apiUrl."/io", "aktualnosci", "Aktualności");
-$sekcje[] = new Sekcja($apiUrl."/sz", "sz", "Zajęcia odwołane");
-$sekcje[] = new Sekcja($apiUrl."/bk", "bk", "Biuro karier");
-$sekcje[] = new Sekcja($apiUrl."/sk", "sk", "Szkolenia i praktyki");
-$sekcje[] = new Sekcja($apiUrl."/so", "so", "Sprawy ogólne");
-
-
-$template->tytul = 'mobiUwB';
-$template->jednostka = "Instytut Informatyki";
+$template->nazwa = "Instytut Informatyki";
 $template->pelny_tytul = 'mobiUwB - Instytut Informatyki';
-$template->sekcje = $sekcje;
 
 try {
     echo $template->execute();
