@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2013-12-22 v4.5
+# 2013-12-22 v4.6
 
 NETWORK:
 *
@@ -32,3 +32,6 @@ images/uwb-logo.png
 js/custom-functions.js
 js/jquery-1.10.2.min.js
 js/orangebox.min.js
+
+libs/Fancybox/jquery.fancybox.css
+libs/Fancybox/jquery.fancybox.pack.js
