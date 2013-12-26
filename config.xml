@@ -13,7 +13,7 @@
 		<nazwa>Instytut Informatyki</nazwa>
 		<pelny_tytul>mobiUwB - Instytut Informatyki</pelny_tytul>
 		<logo>images/logo.png</logo>
-		<apiUrl>http://ii.uwb.edu.pl/api/serwis/?/json/</apiUrl>
+		<apiUrl>http://ii.uwb.edu.pl/serwis/?/json/</apiUrl>
 		<sekcje>
 			<sekcja>
 				<id>io</id>
