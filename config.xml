@@ -24,16 +24,16 @@
 				<st>Zajęcia odwołane</st>
 			</sekcja>
 			<sekcja>
+				<id>so</id>
+				<st>Sprawy ogólne</st>
+			</sekcja>
+			<sekcja>
 				<id>bk</id>
 				<st>Biuro karier</st>
 			</sekcja>
 			<sekcja>
 				<id>sk</id>
 				<st>Szkolenia i praktyki</st>
-			</sekcja>
-			<sekcja>
-				<id>so</id>
-				<st>Sprawy ogólne</st>
 			</sekcja>
 		</sekcje>
 		<mapa>
