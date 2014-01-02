@@ -304,8 +304,8 @@ $(document).on('pageshow',function(event){
         <div id="text" style="padding: 0 5px 3px 0">
 			<div class="adres">
 				<strong>Adres:</strong><br/>
-				<span tal:content="kod">kod</span> <span tal:content="miasto">miasto</span><br/>
-				ul. <span tal:content="ulica">ulica</span> <span tal:content="numer">numer</span>
+				<span tal:content="kod" tal:omit-tag="">kod</span> <span tal:content="miasto" tal:omit-tag="">miasto</span><br/>
+				ul. <span tal:content="ulica" tal:omit-tag="">ulica</span> <span tal:content="numer" tal:omit-tag="">numer</span>
 			</div>
 			<a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
 			<a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>
