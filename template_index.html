@@ -274,14 +274,8 @@ $(document).on('pageshow',function(event){
         </div>
 
         <ul data-role="listview" data-inset="true">
-            <li><a href="#sekcja?strona=io" class="aktualnosci">Aktualności</a></li> 
-            <li><a href="#sekcja?strona=sz" class="sz">Zajęcia odwołane</a>
-                <span class="ui-li-count" id="licznik_sz">0</span>
-            </li>
-            <li><a href="#sekcja?strona=so" class="so">Sprawy ogólne</a></li>
-            <li><a href="#sekcja?strona=bk" class="bk">Biuro karier</a></li>
-            <li><a href="#sekcja?strona=sk" class="sk">Szkolenia i Praktyki</a></li>
-            <li><a href="#plan">Plan zajęć</a></li>
+			<li tal:repeat="item sekcje" tal:content="structure item/zawartosc"></li>
+			<li><a href="#plan">Plan zajęć</a></li>
         </ul>
 
     </div>
