@@ -19,7 +19,7 @@
 				<tytul_sekcji>Aktualności</tytul_sekcji>
 				<id_sekcji>io</id_sekcji>
 			</sekcja>
-			<sekcja>
+			<sekcja licznik="tak">
 				<tytul_sekcji>Zajęcia odwołane</tytul_sekcji>
 				<id_sekcji>sz</id_sekcji>
 			</sekcja>
