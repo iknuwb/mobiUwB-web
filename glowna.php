@@ -112,6 +112,29 @@ if (file_exists('config.xml')) {
 
 	// -------------------------------------------	
 	
+	// ------------ SEKCJE STATYCZNE -------------
+	
+	class SekcjaStatyczna extends Sekcja{
+		//public $id_sekcji;
+		//public $tytul_sekcji;
+		
+		function __construct($id_sekcji, $tytul_sekcji) {
+			$this->id_sekcji = $id_sekcji;
+			$this->tytul_sekcji = $tytul_sekcji;
+		}
+	}
+
+	// tworzymy tablice obiektow
+	$sekcje_statyczne = array();
+	
+	foreach ($config->jednostka[0]->sekcje_statyczne->sekcja_statyczna as $sekcja_statyczna) {
+			$sekcje_statyczne[] = new SekcjaStatyczna($sekcja_statyczna->id_sekcji, $sekcja_statyczna->tytul_sekcji);
+	}
+
+	// $template->sekcje_statyczne = $sekcje_statyczne;
+
+	// -------------------------------------------	
+	
 	/* Wczytanie danych z pliku konfiguracyjnego */
 	
 	$template->opiekunowie = $opiekunowie;
@@ -120,6 +143,7 @@ if (file_exists('config.xml')) {
 	$template->plany_Ist = $plany_Ist;
 	$template->plany_IIst = $plany_IIst;
 	$template->sekcje = $sekcje;
+	$template->sekcje_statyczne = $sekcje_statyczne;
 	
 	// --
 	

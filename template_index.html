@@ -276,7 +276,7 @@ $(document).on('pageshow',function(event){
 
         <ul data-role="listview" data-inset="true">
 			<li tal:repeat="item sekcje" tal:content="structure item/zawartosc"></li>
-			<li><a href="#plan">Plan zajęć</a></li>
+			<li tal:repeat="item sekcje_statyczne"><a href="#${item/id_sekcji}" tal:content="item/tytul_sekcji">Sekcja statyczna</a></li>
         </ul>
 
     </div>
