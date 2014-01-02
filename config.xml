@@ -16,24 +16,24 @@
 		<apiUrl>http://ii.uwb.edu.pl/serwis/?/json/</apiUrl>
 		<sekcje>
 			<sekcja>
-				<id>io</id>
-				<st>Aktualności</st>
+				<tytul_sekcji>Aktualności</tytul_sekcji>
+				<id_sekcji>io</id_sekcji>
 			</sekcja>
 			<sekcja>
-				<id>sz</id>
-				<st>Zajęcia odwołane</st>
+				<tytul_sekcji>Zajęcia odwołane</tytul_sekcji>
+				<id_sekcji>sz</id_sekcji>
 			</sekcja>
 			<sekcja>
-				<id>so</id>
-				<st>Sprawy ogólne</st>
+				<tytul_sekcji>Sprawy ogólne</tytul_sekcji>
+				<id_sekcji>so</id_sekcji>
 			</sekcja>
 			<sekcja>
-				<id>bk</id>
-				<st>Biuro karier</st>
+				<tytul_sekcji>Biuro karier</tytul_sekcji>
+				<id_sekcji>bk</id_sekcji>
 			</sekcja>
 			<sekcja>
-				<id>sk</id>
-				<st>Szkolenia i praktyki</st>
+				<tytul_sekcji>Szkolenia i praktyki</tytul_sekcji>
+				<id_sekcji>sk</id_sekcji>
 			</sekcja>
 		</sekcje>
 		<mapa>
@@ -55,34 +55,34 @@
 		<plany>
 			<pierwszy_stopien>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem1.pdf</link>
 					<opis>1 rok</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem1.pdf</link>
 				</plan>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem3.pdf</link>
 					<opis>2 rok</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem3.pdf</link>
 				</plan>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem4.pdf</link>
 					<opis>2 rok (studia przemienne)</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem4.pdf</link>
 				</plan>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem5.pdf</link>
 					<opis>3 rok</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem5.pdf</link>
 				</plan>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem6.pdf</link>
 					<opis>3 rok (studia przemienne)</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st1_sem6.pdf</link>
 				</plan>
 			</pierwszy_stopien>
 			<drugi_stopien>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st2_sem1.pdf</link>
 					<opis>Rok 1</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st2_sem1.pdf</link>
 				</plan>
 				<plan>
-					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st2_sem3.pdf</link>
 					<opis>Rok 2</opis>
+					<link>http://ii.uwb.edu.pl/pliki/file/2013_2014/plany/st2_sem3.pdf</link>
 				</plan>
 			</drugi_stopien>
 		</plany>
