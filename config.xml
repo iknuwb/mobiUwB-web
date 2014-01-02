@@ -36,6 +36,13 @@
 				<st>Sprawy ogólne</st>
 			</sekcja>
 		</sekcje>
+		<mapa>
+			<tytul>Instytut Informatyki</tytul>
+			<wspolrzedne>
+				<dlugosc>53.13051</dlugosc>
+				<szerokosc>23.143811</szerokosc>
+			</wspolrzedne>
+		</mapa>
 		<adres>
 			<kod>15-887</kod>
 			<miasto>Białystok</miasto>
@@ -45,13 +52,6 @@
 		<email>sekretariat@ii.uwb.edu.pl</email>
 		<tel1>+48-85-745-7662</tel1>
 		<fax>+48-85-745-7662</fax>
-		<mapa>
-			<tytul>Instytut Informatyki</tytul>
-			<wspolrzedne>
-				<dlugosc>53.13051</dlugosc>
-				<szerokosc>23.143811</szerokosc>
-			</wspolrzedne>
-		</mapa>
 		<plany>
 			<pierwszy_stopien>
 				<plan>
