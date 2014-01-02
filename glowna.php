@@ -51,11 +51,45 @@ if (file_exists('config.xml')) {
 	
 	// -------------------------------------------
 	
+	// ------------------ PLANY ------------------
+	
+	class Plan {
+		public $link;
+		public $opis;
+		
+		function __construct($link, $opis) {
+			$this->link = $link;
+			$this->opis = $opis;
+		}
+	}
+
+	// tworzymy tablice obiektow
+	$plany_Ist = array();
+	
+	foreach ($config->jednostka[0]->plany->pierwszy_stopien->plan as $plan_Ist) {
+		$plany_Ist[] = new Plan($plan_Ist->link, $plan_Ist->opis);
+	}
+	
+	
+	$plany_IIst = array();
+	
+	foreach ($config->jednostka[0]->plany->drugi_stopien->plan as $plan_IIst) {
+		$plany_IIst[] = new Plan($plan_IIst->link, $plan_IIst->opis);
+	}
+
+	// $template->plany_Ist = $plany_Ist;
+	// $template->plany_IIst = $plany_IIst;
+
+	// -------------------------------------------
+	
 	
 	/* Wczytanie danych z pliku konfiguracyjnego */
 	
 	$template->opiekunowie = $opiekunowie;
 	$template->autorzy = $autorzy;
+	
+	$template->plany_Ist = $plany_Ist;
+	$template->plany_IIst = $plany_IIst;
 	
 	
 	$template->nazwa = $config->jednostka[0]->nazwa;
