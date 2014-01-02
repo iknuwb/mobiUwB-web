@@ -7,8 +7,56 @@ $template->setOutputMode(PHPTAL::HTML5);
 
 if (file_exists('config.xml')) {
     $config = simplexml_load_file('config.xml');	// wczytanie pliku konfiguracyjnego
+		
+	// ---------------- AUTORZY ----------------
+	
+	// klasa Autor
+	class Autor {
+		public $imie;
+		
+		function __construct($imie) {
+			$this->imie = $imie.' (autor)';
+		}
+	}
+
+	// tworzymy tablice obiektow
+	$autorzy = array();
+	
+	foreach ($config->autorzy->autor as $autor) {
+		$autorzy[] = new Autor($autor);
+	}
+
+	// $template->autorzy = $autorzy;
+
+	// -------------------------------------------
+	
+	// --------------- OPIEKUNOWIE ---------------
+	
+	class Opiekun extends Autor{
+		//public $imie;
+
+		function __construct($imie) {
+			$this->imie = $imie.' (opiekun, autor)';
+		}
+	}
+	
+	// tworzymy tablice obiektow
+	$opiekun = array();
+	
+	foreach ($config->opiekun as $opiekun) {
+		$opiekunowie[] = new Opiekun($opiekun);
+	}
+
+	//$template->opiekunowie = $opiekunowie;
+	
+	// -------------------------------------------
+	
 	
 	/* Wczytanie danych z pliku konfiguracyjnego */
+	
+	$template->opiekunowie = $opiekunowie;
+	$template->autorzy = $autorzy;
+	
 	
 	$template->nazwa = $config->jednostka[0]->nazwa;
 	$template->pelny_tytul = $config->jednostka[0]->pelny_tytul;

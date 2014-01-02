@@ -1,12 +1,11 @@
 CACHE MANIFEST
-# 2013-12-27 v5.3
+# 2013-12-27 v5.7
 
 NETWORK:
 *
 
 CACHE:
 template_index.html
-oprogramie.html
 custom-style.css
 #glowna.php
 #index.php

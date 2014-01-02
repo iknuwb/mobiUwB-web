@@ -331,13 +331,8 @@ $(document).on('pageshow',function(event){
     	<div data-role="content">
     	    <strong>Autorzy</strong>
     	    <ul>
-    	        <li>Dominik Tomaszuk (opiekun i autor)</li>
-    	        <li>Artem Barysevich (autor)</li>
-    	        <li>Karol Borkowski (autor)</li>
-    	        <li>Radosław Piliszek (autor)</li>
-    	        <li>Maciej Puchalski (autor)</li>
-				<li>Łukasz Szeremeta (autor)</li>
-    	        <li>Artur Szymański (autor)</li>
+				<li tal:repeat="item opiekunowie" tal:content="item/imie">Imie i nazwisko opiekuna</li>
+    	        <li tal:repeat="item autorzy" tal:content="item/imie">Imie i nazwisko autora</li>
     	    </ul>
             <strong>Licencja:</strong>
             <p>
