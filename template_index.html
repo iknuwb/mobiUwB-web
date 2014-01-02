@@ -309,6 +309,8 @@ $(document).on('pageshow',function(event){
 			</div>
 			<a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
 			<a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>
+			<a tal:condition="tel2" data-role="button" href="tel:${tel2}" rel="external" style="margin:5px">Tel2: <span tal:condition="tel2" tal:content="tel2">telefon2</span></a>
+			<a tal:condition="fax" data-role="button" href="tel:${fax}" rel="external" style="margin:5px">Fax: <span tal:condition="fax" tal:content="fax">fax</span></a>
 		</div>
     </div>
 </div>

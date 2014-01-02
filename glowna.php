@@ -149,8 +149,9 @@ if (file_exists('config.xml')) {
 	$tel = 'tel:';
 	$template->tel1_ = $tel.$config->jednostka[0]->tel1;
 	
-	
-	
+	// tutaj dla odmiany nie łączę - dałem tel:${tel2} w template_index.html
+	$template->tel2 = $config->jednostka[0]->tel2;
+	$template->fax = $config->jednostka[0]->fax;
 	
 	
 	/* Zawartość specyficzna dla platform - Android/przeglądarka */
