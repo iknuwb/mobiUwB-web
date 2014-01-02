@@ -302,13 +302,14 @@ $(document).on('pageshow',function(event){
         <div id="map_canvas" style="width:500px; height:300px;margin:auto;">
         </div>
         <div id="text" style="padding: 0 5px 3px 0">
-		<div class="adres">
-		<strong>Adres:</strong><br/>
-		<span tal:content="kod">kod</span> <span tal:content="miasto">miasto</span><br/>
-		ul. <span tal:content="ulica">ulica</span> <span tal:content="numer">numer</span>
+			<div class="adres">
+				<strong>Adres:</strong><br/>
+				<span tal:content="kod">kod</span> <span tal:content="miasto">miasto</span><br/>
+				ul. <span tal:content="ulica">ulica</span> <span tal:content="numer">numer</span>
+			</div>
+			<a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
+			<a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>
 		</div>
-        <a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
-        <a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>        </div>
     </div>
 </div>
 <!-- /kontakt -->
