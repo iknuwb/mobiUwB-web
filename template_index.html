@@ -57,11 +57,7 @@ var currCat = "";
 // potrzebne do ustawiania tytułów (h1) poszczególnych stron
 // niestety nie ma tego w json, więc robimy na sztywno w konficuracji
 var titles = {};
-titles['io'] = "Aktualności";
-titles['sz'] = "Zajęcia odwołane";
-titles['bk'] = "Biuro karier";
-titles['sk'] = "Szkolenia i praktyki";
-titles['so'] = "Sprawy ogólne";
+<tal:block tal:repeat="item sekcje">titles['${item/id_sekcji}'] = "${item/tytul_sekcji}";</tal:block>
 
 // nazwy polskich miesięcy
 var months = new Array("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień");

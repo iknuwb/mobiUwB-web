@@ -83,6 +83,35 @@ if (file_exists('config.xml')) {
 	// -------------------------------------------
 	
 	
+	// ----------------- SEKCJE -----------------
+	
+	class Sekcja {
+		public $id_sekcji;
+		public $tytul_sekcji;
+		public $zawartosc;
+		
+		function __construct($id_sekcji, $tytul_sekcji, $zawartosc) {
+			$this->id_sekcji = $id_sekcji;
+			$this->tytul_sekcji = $tytul_sekcji;
+			$this->zawartosc = $zawartosc;
+		}
+	}
+
+	// tworzymy tablice obiektow
+	$sekcje = array();
+	
+	foreach ($config->jednostka[0]->sekcje->sekcja as $sekcja) {
+		if ($sekcja['licznik'] != 'tak'){
+			$sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#sekcja?strona=$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a>");
+		} else{
+			$sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#sekcja?strona=$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_sz\">0</span>");
+		}
+	}
+
+	// $template->sekcje = $sekcje;
+
+	// -------------------------------------------	
+	
 	/* Wczytanie danych z pliku konfiguracyjnego */
 	
 	$template->opiekunowie = $opiekunowie;
@@ -90,7 +119,9 @@ if (file_exists('config.xml')) {
 	
 	$template->plany_Ist = $plany_Ist;
 	$template->plany_IIst = $plany_IIst;
+	$template->sekcje = $sekcje;
 	
+	// --
 	
 	$template->nazwa = $config->jednostka[0]->nazwa;
 	$template->pelny_tytul = $config->jednostka[0]->pelny_tytul;
