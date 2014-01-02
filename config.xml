@@ -36,6 +36,12 @@
 				<id_sekcji>sk</id_sekcji>
 			</sekcja>
 		</sekcje>
+		<sekcje_statyczne>
+			<sekcja_statyczna>
+				<tytul_sekcji>Plan zajęć</tytul_sekcji>
+				<id_sekcji>plan</id_sekcji>
+			</sekcja_statyczna>
+		</sekcje_statyczne>
 		<mapa>
 			<tytul>Instytut Informatyki</tytul>
 			<wspolrzedne>
