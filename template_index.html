@@ -263,8 +263,7 @@ $(document).on('pageshow',function(event){
 <div data-role="page" id="start">
 
     <div data-role="header" data-theme="d" id="app-top">
-        <h1 class="glowny">mobiUwB </h1>
-        <h2><span tal:content="nazwa" class="nazwa">Instytut/Wydział</span></h2>
+        <h1 class="glowny">mobiUwB <span tal:content="nazwa" class="nazwa">Instytut/Wydział</span></h1>
     </div>
 
     <!-- content/ -->
@@ -345,7 +344,7 @@ Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukoweg
 <!-- sekcja/ -->
 <!-- miejsce, gdzie bedzie ladowana dynamiczna tresc -->
 <div id="sekcja" data-role="page">
-    <div data-role="header" data-theme="b">
+    <div data-role="header" data-theme="b" data-position="fixed">
         <h1></h1>
         <tal:block content="structure glowna"></tal:block>
     </div>
