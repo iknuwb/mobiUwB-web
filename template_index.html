@@ -5,11 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title tal:content="pelny_tytul">mobiUwB</title>
 	<link rel="apple-touch-icon" href="images/ikona60.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="images/icons/ikona76.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="images/icons/ikona120.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="images/icons/ikona152.png" />
 
 	<!-- jQuery i jQuery Mobile -->
-	<script src="js/jquery-1.10.2.min.js"></script>
-	<link rel="stylesheet" href="jquery.mobile-1.3.2.min.css" />
-	<script src="jquery.mobile-1.3.2.min.js"></script>
+	<script src="js/jquery-2.0.3.min.js"></script>
+	<link rel="stylesheet" href="jquery.mobile-1.4.0.min.css" />
+	<script src="jquery.mobile-1.4.0.min.js"></script>
 
         <!-- orangebox - lightbox -->
         <!--
@@ -35,177 +38,14 @@
 	<tal:block content="structure offline"></tal:block>
 	
 <script>
-
-// globalne zmienne
-
-// podstawowy adres API
-var apiUrl = '${apiUrl}';
-
-// ilość pobieranych rekordów przy pierwszym odwiedzeniu strony
-var numRecordsDef = 6;
-
-// ilość pobieranych rekordów po kliknięciu w "załaduj więcej"
-var numRecordsNew = 6;
-
-// ilość już pobranych rekordów - potrzebne przy obliczaniu offsetu
-var numLoaded = 0;
-
-// kod obecnie załadowanej kategorii
-// domyślnie puste, bo żadna strona nie była ładowana
-var currCat = "";
-
-// tytuły stron o poszczególnych "kodach"
-// potrzebne do ustawiania tytułów (h1) poszczególnych stron
-// niestety nie ma tego w json, więc robimy na sztywno w konficuracji
-var titles = {};
-<tal:block tal:repeat="item sekcje">titles['${item/id_sekcji}'] = "${item/tytul_sekcji}";</tal:block>
-
-// nazwy polskich miesięcy
-var months = new Array("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień");
-
-function loadData(apiUrl, itemsNum, startFrom)
-{
-    // ostateczna forma url-a - po dodaniu offsetu i startu
-    var finalUrl = apiUrl;
-
-    // przechowuje elementy z newsami/informacjami
-    //var items = [];
-    // będziemy zwracać string z całą treścią
-    var items = "";
-
-    if(itemsNum != null)
-    {
-        finalUrl = apiUrl + '/' + itemsNum;
-        if(startFrom != null)
-        {
-            finalUrl += '/' + startFrom;
-        }
-    }
-    //console.log("final url:"+finalUrl);
-
-    // ajax zamiast getJson, bo trzeba zapytanie wyslac synchronicznie
-    $.ajax({
-        dataType: "json",
-        url: finalUrl,
-        success: function(data){
-
-    $.each(data, 
-        function(key, val) {
-            //var d = new that.Date(val.data);
-            // rozdzielamy string z data na tablice z konkretnymi czesciami
-            var a = (val.data).split(/[^0-9]/);
-            //var d=new Date (a[0],a[1]-1,a[2],a[3],a[4],a[5] );
-
-            // dzień nazwaMiesiąca rok
-            var dateString = a[2] + ' ' + months[a[1]- 1] + " " + a[0]; 
-
-            // wrzuca do tablicy HTML z divami "collapsible" (pozwalających na zwijanie i rozwijanie
-            //items.push('<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data" data-inset="true">' + d.toLocaleDateString()+ '</h4><div class="title">' + val.tytul + '</div><div class="tresc">' + val.tresc + '</div></div>');          
-            items += '<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="d" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data" data-inset="true">' + dateString + '</h4><div class="title">' + val.tytul + '</div><div class="tresc">' + val.tresc + '</div></div>';          
-
-        }); 
-    }, 
-    // trzeba wywoływać synchronicznie, bo inaczej funkcja zwroci pusta tablice; 
-    async: false
-    });  
-
-
-    return items;
-}
-
-// przechwytuje request do ladowania strony
-$(document).bind( "pagebeforechange", function( e, data ) {
-	if ( typeof data.toPage === "string" ) {
-	        // ladujemy tylko wybrane url-e 
-		var u = $.mobile.path.parseUrl( data.toPage ),
-			re = /^#sekcja/;
-		if ( u.hash.search(re) !== -1 ) {
-		        // wywolujemy funkcje odpowiedzialna za ladownie tresci 
-			loadPage( u, data.options );
-
-			// niech jmq nie miesza sie w ladowanie tresci
-			e.preventDefault();
-		}
-	}
+//ochrona przed spamem
+$( document ).ready(function() {
+  $('#poczta').each(function() {
+    var email = this.href.replace('(malpa)', '@').replace(/\(kropka\)/g, '.');
+    this.href = email;
+    $('#poczta').html(email.replace('mailto:', ''));  
+  });
 });
-
-// ładuje treść konkretnej strony i wrzuca do DOM-u 
-function loadPage( urlObj, options )
-{
-	var categoryName = urlObj.hash.replace( /.*strona=/, "" ),
-
-		// gdzie bedziemy wrzucac dane
-		// (domyslnie = strona)
-		pageSelector = urlObj.hash.replace( /\?.*$/, "" );
-
-
-		// dostęp do diva, gdzie będziemy wrzucać treść
-		var $page = $( pageSelector ),
-
-			// Get the header for the page.
-
-			// header, żeby móc zmieniać tytuły
-			$header = $page.children( ":jqmData(role=header)" ),
-
-			// content - to tu będziemy dorzucać treść
-			$content = $page.children( ":jqmData(role=content)" ),
-
-			// treść, którą będziemy dorzucać
-			// pobieramy najpierw numRecordsDef rekordów
-			markup = loadData(apiUrl+categoryName, numRecordsDef, null);
-
-			// do ładowania od razu całej treści:
-			//markup = loadData('http://ii.uwb.edu.pl/serwis/?/json/'+categoryName, null, null);
-			markup += '<a href="#" data-role="button" class="loadMore">Załaduj więcej</a>';
-
-		// ustawiamy nowy tyuł strony, zależnie od tego, jaką ładujemy stronę
-		$header.find( "h1" ).html( titles[categoryName] );
-
-		// dodajemy data-role do linkow z lightbox
-		//$(markup).find("a[rel^='lightbox']").attr('data-role', 'popup');
-		
-		// wrzucamy treść
-		$content.html( markup );
-
-		// odświeżamy!
-		$page.page();
-
-                // i jeszcze raz!
-                $(pageSelector).trigger('create');
-
-		options.dataUrl = urlObj.href;
-
-		// ustalamy, ile danych mamy już pobranych
-		numLoaded = numRecordsDef;
-
-		// ustawiamy kod obecnie załadowanej kategorii
-		// potrzebne przy "ładuj więcej", bo musimy wiedzieć, jakie dane pobierać
-		currCat = categoryName;
-
-		// no i w końcu robimy tę #$^%# stronę
-		$.mobile.changePage( $page, options );
-}
-
-// obsługa eventu po kliknięciu w loadMore
-// trzeba korzystać z pageshow a nie pageinit, bo różne strony będą wielokrotnie ładowane
-$(document).on('pageshow', function(){
-    $('a.loadMore').bind('click', function(e) {
-        //console.log('loadMore event');
-        // pobieramy dane od miejsca numLoaded (ilości już załadowanych rekordów)
-        var newData = loadData(apiUrl+currCat, numRecordsNew, numLoaded);
-
-        // nowe dane wrzucamy przed przyciskiem ładowania więcej treści
-        $("a.loadMore").before(newData);//.trigger('create');
-
-        // trzeba odświeżyć style, żeby nowo załadowane rekordy miały właściwy styl
-        $("#sekcja").trigger('create');
-
-        // załadowaliśmy więcej treści, uaktualniamy zmienną z ilością pobranych danych
-        numLoaded += numRecordsNew;
-    })
-}
-);
-
 
 // funkcja odpowiedzialna za ladownanie mapy z api google
 function initMap(lat,lng) {
@@ -252,6 +92,52 @@ $(document).on('pageshow',function(event){
 
 });
 
+
+//ladowanie wpisow 6..12
+$( document ).ready(function() {
+  //console.log("test");
+  
+  var output = "";
+  var pg0 ="";
+  $( ".wiecej" ).click(function() {
+    var pg = $( this ).data( "pg" );
+	pg0 = pg;
+    //console.log(pg);
+	
+	$.ajax({
+        dataType: "json",
+        url: "http://ii.uwb.edu.pl/serwis/?/json/"+pg+"/6/6",
+        success: function(data){
+		//console.log("klik - wiecej");
+		
+		// przechowuje elementy z newsami/informacjami
+		// będziemy zwracać string z całą treścią
+		output = "";
+	    $.each(data, function(key, val) {
+				// rozdzielamy string z data na tablice z konkretnymi czesciami
+				var d = (val.data).split(/[^0-9]/);
+
+				// FORMAT: DD.MM.YY (HH:MM)
+				var dateString = d[2] + '.' + [d[1]] + '.' + d[0] + ' (' + d[3] + ':' + d[5] + ')'; 
+
+				// wrzuca do tablicy HTML z divami "collapsible" (pozwalających na zwijanie i rozwijanie
+				output += '<div class="ui-content" data-role="content" role="main"><div class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content" data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data ui-collapsible-heading" data-inset="true"><a href="#" class="ui-collapsible-heading-toggle ui-btn ui-icon-arrow-u ui-btn-icon-left ui-btn-b">' + dateString
+				+ '<span class="ui-collapsible-heading-status"> click to collapse contents</span></a></h4><div aria-hidden="false" class="ui-collapsible-content ui-body-b"><div class="title">' + val.tytul
+				+ '</div><div class="tresc">' + val.tresc + '</div></div></div></div>';
+        });
+    }, 
+    // wywołujemy synchronicznie
+    async: false
+    });  
+	
+		$( "div[data-pg=\"" + pg0 + "\"]").before( output );
+		//console.log(pg0);
+
+     $( this ).remove(); //ukrywamy juz niepotrzebny przycisk
+  });
+});
+
+
 </script>
 
 </head>
@@ -260,18 +146,19 @@ $(document).on('pageshow',function(event){
 
 <!-- start/ -->
 <!-- strona główna - menu i linki w stopce -->
-<div data-role="page" id="start">
+<div data-role="page" id="start" data-theme="b">
 
-    <div data-role="header" data-theme="d" id="app-top">
-        <h1 class="glowny">mobiUwB <span tal:content="nazwa" class="nazwa">Instytut/Wydział</span></h1>
+    <div data-role="header" data-theme="b" id="app-top">
+        <h1 class="glowny">
+			<span data-form="ui-icon" class="ui-icon ui-icon-shadow" style="vertical-align: middle; display:inline-block">
+				<img src="images/logo32.png" alt="Uniwersytet w Białymstoku" tal:attributes="src logo_male"/>
+				<img tal:condition="logo_jednostki" src="images/logo.png" alt="Instytut/Wydział" tal:attributes="src logo_jednostki; alt nazwa" />
+			</span> MobiUwB 
+			<span tal:content="nazwa" class="nazwa">Instytut/Wydział</span></h1>
     </div>
 
     <!-- content/ -->
     <div data-role="content" data-theme="b">
-
-        <div id="logo">
-            <img alt="logo" src="images/logo.png" tal:attributes="src logo"/>
-        </div>
 
         <ul data-role="listview" data-inset="true">
 			<li tal:repeat="item sekcje" tal:content="structure item/zawartosc"></li>
@@ -285,8 +172,8 @@ $(document).on('pageshow',function(event){
     <!-- Linki w "stopce" -->
     <div data-role="navbar" data-theme="b">
         <ul>
-            <li><a href="#kontakt" data-rel="dialog" data-icon="info" >Kontakt</a></li>
-            <li><a href="#oprogramie"  data-rel="dialog" data-transition="pop" data-icon="info" >O programie</a></li>
+            <li><a href="#kontakt" data-rel="dialog" data-icon="info" data-theme="b">Kontakt</a></li>
+            <li><a href="#oprogramie"  data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
         </ul>
     </div>
     <!-- /navbar -->
@@ -296,8 +183,8 @@ $(document).on('pageshow',function(event){
 <!-- /start -->
 
 <!-- /kontakt -->
-<div data-role="page" id="kontakt" class="page-map" style="width:100%; height:100%;" data-close-btn="right" >
-    <div data-role="header" data-theme="d"><h1>Kontakt</h1></div>
+<div data-role="page" id="kontakt" class="page-map" style="width:100%; height:100%;" data-close-btn="right" data-theme="b">
+    <div data-role="header" data-theme="b"><h1>Kontakt</h1></div>
     <div data-role="content" style="padding:0;">
         <div id="map_canvas" style="width:500px; height:300px;margin:auto;">
         </div>
@@ -317,12 +204,15 @@ $(document).on('pageshow',function(event){
 <!-- /kontakt -->
 
 <!-- /oprogramie -->
-<div data-role="page"  id="oprogramie" data-close-btn="right" >
-      <div data-role="header" data-theme="d" >
+<div data-role="page"  id="oprogramie" data-close-btn="right" data-theme="b">
+      <div data-role="header" data-theme="b" >
     	<h1>O programie</h1>
       </div>
-    	<div data-role="content">
-    	    <strong>Autorzy</strong>
+        <div data-role="content">
+            <div style="text-align: center">
+				<img src="logo128.png" alt="logo" tal:attributes="src logo_duze" />
+            </div>
+            <strong>Autorzy</strong>
     	    <ul>
 				<li tal:repeat="item opiekunowie" tal:content="item/imie">Imie i nazwisko opiekuna</li>
     	        <li tal:repeat="item autorzy" tal:content="item/imie">Imie i nazwisko autora</li>
@@ -343,25 +233,34 @@ Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukoweg
 
 <!-- sekcja/ -->
 <!-- miejsce, gdzie bedzie ladowana dynamiczna tresc -->
-<div id="sekcja" data-role="page">
-    <div data-role="header" data-theme="b" data-position="fixed">
-        <h1></h1>
+<div class="strona" data-role="page" tal:repeat="item sekcje" tal:attributes="id item/id_sekcji; data-ile item/ilosc" data-theme="b">
+    <div tal:condition="item" data-role="header" data-theme="b" data-position="fixed">
+		<h1 tal:content="item/tytul_sekcji"></h1>
         <tal:block content="structure glowna"></tal:block>
     </div>
 
-    <div data-role="content"></div>
+    <div data-role="content" tal:repeat="item2 item/elementy">
+	<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" tal:condition="item2">
+		<h4 class="data" data-inset="true" tal:content="item2/data">dateString</h4>
+		<div class="title" tal:content="item2/tytul">val.tytul</div>
+		<div class="tresc" tal:content="structure item2/tresc">val.tresc</div>
+	</div>
+    </div>
+	
+
+    <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji;" phptal:cache="0s"><a href='#' data-role='button' class='loadMore'>Załaduj więcej</a></div>
 </div>
 <!-- /sekcja -->
 
 <!-- plan/ -->
-<div data-role="page" id="plan">
-    <div data-role="header" data-theme="b">
+<div data-role="page" id="plan" data-theme="b">
+    <div data-role="header" data-theme="b" data-position="fixed">
         <h1>Plan zajęć</h1>
         <tal:block content="structure glowna"></tal:block>
     </div>
 
     <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-divider-theme="d">
+        <ul data-role="listview" data-inset="true" data-divider-theme="b">
             <li data-role="list-divider">Studia I stopnia</li>
             <li tal:repeat="item plany_Ist"><a href="http://***.uwb.edu.pl/pliki/file/***/plany/st1_sem*.pdf" data-ajax="false" tal:attributes="href item/link" tal:content="item/opis">Rok Ist</a></li>
             <li data-role="list-divider">Studia II stopnia</li>

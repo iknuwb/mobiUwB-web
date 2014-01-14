@@ -9,17 +9,20 @@
 		<autor>Łukasz Szeremeta</autor>
 		<autor>Artur Szymański</autor>
 	</autorzy>
+	<logo_male>images/logo32.png</logo_male>
+	<logo_srednie>images/logo64.png</logo_srednie>
+	<logo_duze>images/logo128.png</logo_duze>
 	<jednostka>
 		<nazwa>Instytut Informatyki</nazwa>
 		<pelny_tytul>mobiUwB - Instytut Informatyki</pelny_tytul>
-		<logo>images/logo.png</logo>
 		<apiUrl>http://ii.uwb.edu.pl/serwis/?/json/</apiUrl>
+		<!-- <logo_jednostki></logo_jednostki> --><!-- opcjonalny -->
 		<sekcje>
 			<sekcja>
 				<tytul_sekcji>Aktualności</tytul_sekcji>
 				<id_sekcji>io</id_sekcji>
 			</sekcja>
-			<sekcja licznik="tak">
+			<sekcja licznik="tak"><!-- atrybut licznik - opcjonalny -->
 				<tytul_sekcji>Zajęcia odwołane</tytul_sekcji>
 				<id_sekcji>sz</id_sekcji>
 			</sekcja>
@@ -55,9 +58,10 @@
 			<ulica>Sosnowa</ulica>
 			<numer>64</numer>
 		</adres>
-		<email>sekretariat@ii.uwb.edu.pl</email>
+		<email>sekretariat(malpa)ii(kropka)uwb(kropka)edu(kropka)pl</email><!-- zamiast @-> (malpa) zamiast .-> (kropka) -->
 		<tel1>+48-85-745-7662</tel1>
-		<fax>+48-85-745-7662</fax>
+		<!-- <tel2></tel2> --><!-- opcjonalny -->
+		<fax>+48-85-745-7662</fax><!-- opcjonalny -->
 		<plany>
 			<pierwszy_stopien>
 				<plan>

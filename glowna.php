@@ -82,6 +82,7 @@ if (file_exists('config.xml')) {
 
 	// -------------------------------------------
 	
+	$template->apiUrl = $api_url = $config->jednostka[0]->apiUrl;
 	
 	// ----------------- SEKCJE -----------------
 	
@@ -89,22 +90,65 @@ if (file_exists('config.xml')) {
 		public $id_sekcji;
 		public $tytul_sekcji;
 		public $zawartosc;
+		public $elementy;
+		public $ilosc;
+		public $wiecej;
 		
-		function __construct($id_sekcji, $tytul_sekcji, $zawartosc) {
+		function __construct($id_sekcji, $tytul_sekcji, $zawartosc, $elementy, $ilosc, $wiecej) {
 			$this->id_sekcji = $id_sekcji;
 			$this->tytul_sekcji = $tytul_sekcji;
 			$this->zawartosc = $zawartosc;
+			$this->elementy = $elementy;
+			$this->ilosc = $ilosc;
+			$this->wiecej = $wiecej;
 		}
 	}
 
+	class Elementy {
+		public $tresc;
+		public $tytul;
+		public $data;
+
+		function __construct($tresc, $tytul, $data) {
+			$this->tresc = $tresc;
+			$this->tytul = $tytul;
+			$this->data = $data;
+		}
+	}
 	// tworzymy tablice obiektow
 	$sekcje = array();
 	
 	foreach ($config->jednostka[0]->sekcje->sekcja as $sekcja) {
+		/*UWAGA UWAGA UWAGA*/
+		$json = file_get_contents("$api_url". $sekcja->id_sekcji ."/6/0"); //limit 6 z offsetem 0
+		$json_ile = file_get_contents("$api_url". $sekcja->id_sekcji); //wczytujemy wszystko aby sprawdzic ile jest elementow tablicy
+		$s = json_decode($json,true);
+		$s_ile = json_decode($json_ile,true);
+		$elementy = array();
+		$ile = count($s_ile);
+		if ($ile > 6)
+			$wiecej = true;
+		else
+			$wiecej = false;
+		for ($i = 0; ($i < 6 && $i < count($s)); $i++) {
+			$cala = str_replace('Z', '', $s[$i]['data']);
+			$calaarr = explode("T", $cala);
+			$dataarr = explode("-", $calaarr[0]);
+			$czasarr = explode(":", $calaarr[1]);
+			$rok = $dataarr[0];
+			$miesiac = $dataarr[1];
+			$dzien = $dataarr[2];
+			$godzina = $czasarr[0];
+			$minuty = $czasarr[1];
+			$sekundy = $czasarr[2]; // nie uzywam teraz
+			$polskadata = $dzien . '.' . $miesiac . '.' . $rok . ' (' . $godzina . ':'. $minuty . ')';
+			$elementy[] = new Elementy($s[$i]['tresc'], $s[$i]['tytul'], $polskadata);
+		}
+		//$elementy[] = new Elementy("bla", "Bla", "bla");//usunac
 		if ($sekcja['licznik'] != 'tak'){
-			$sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#sekcja?strona=$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a>");
+			$sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a>", $elementy, $ile, $wiecej);
 		} else{
-			$sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#sekcja?strona=$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_sz\">0</span>");
+			$sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_sz\">0</span>", $elementy, $ile, $wiecej);
 		}
 	}
 
@@ -149,9 +193,15 @@ if (file_exists('config.xml')) {
 	
 	$template->nazwa = $config->jednostka[0]->nazwa;
 	$template->pelny_tytul = $config->jednostka[0]->pelny_tytul;
-	$template->logo = $config->jednostka[0]->logo;
 	
-	$template->apiUrl = $config->jednostka[0]->apiUrl;
+	/* loga UwB */
+	$template->logo_male = $config->logo_male;				// 32 x 32
+	$template->logo_srednie = $config->logo_srednie;		// 64 x 64
+	$template->logo_duze = $config->logo_duze;				// 128 x 128
+	
+	$template->logo_jednostki = $config->jednostka[0]->logo;	// opcjonalne
+	
+	//$template->apiUrl = $config->jednostka[0]->apiUrl; // jest nad wczytywaniem sekcji
 
 // mapa
 	$template->tytul = $config->jednostka[0]->mapa->tytul;
@@ -174,8 +224,8 @@ if (file_exists('config.xml')) {
 	$template->tel1_ = $tel.$config->jednostka[0]->tel1;
 	
 	// tutaj dla odmiany nie łączę - dałem tel:${tel2} w template_index.html
-	$template->tel2 = $config->jednostka[0]->tel2;
-	$template->fax = $config->jednostka[0]->fax;
+	$template->tel2 = $config->jednostka[0]->tel2;	// opcjonalne
+	$template->fax = $config->jednostka[0]->fax;	// opcjonalne
 	
 	
 	/* Zawartość specyficzna dla platform - Android/przeglądarka */
@@ -195,6 +245,7 @@ if (file_exists('config.xml')) {
 	<link rel=stylesheet href=offline-indicator.css>';
 		$template->glowna = '<a href=glowna.php data-icon=home data-iconpos=left>Główna</a>';
 	}
+
 	
 	try {
 		echo $template->execute();
