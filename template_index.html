@@ -2,7 +2,7 @@
 <html manifest="cache.manifest">
 <head>
     <meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 	<title tal:content="pelny_tytul">mobiUwB</title>
 	<link rel="apple-touch-icon" href="images/ikona60.png" />
 	<link rel="apple-touch-icon" sizes="76x76" href="images/icons/ikona76.png" />
@@ -65,31 +65,11 @@ function initMap(lat,lng) {
     google.maps.event.trigger(map, 'resize')
 }
 
-// funkcja blokująca zoomowanie double clickiem
-(function($) {
-  $.fn.nodoubletapzoom = function() {
-      $(this).bind('touchstart', function preventZoom(e) {
-        var t2 = e.timeStamp
-          , t1 = $(this).data('lastTouch') || t2
-          , dt = t2 - t1
-          , fingers = e.originalEvent.touches.length;
-        $(this).data('lastTouch', t2);
-        if (!dt || dt > 500 || fingers > 1) return; // not double-tap
-
-        e.preventDefault(); // double tap - prevent the zoom
-        // also synthesize click events we just swallowed up
-        $(this).trigger('click').trigger('click');
-      });
-  };
-})(jQuery);
-
 // zaladowanie mapy - mozna dopiero, jak DOM jest calkiem zaladowany
 // inaczej nie dostaniemy danych od google
 //$('#kontakt').on('pageshow',function(event){
 $(document).on('pageshow',function(event){
     initMap(${dlugosc},${szerokosc});
-    $(document).nodoubletapzoom();
-
 });
 
 
