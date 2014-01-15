@@ -153,7 +153,7 @@ $( document ).ready(function() {
 <div data-role="footer" data-theme="b">
     <div data-role="navbar" data-theme="b">
         <ul>
-            <li><a href="#kontakt" data-rel="dialog" data-icon="info" data-theme="b">Kontakt</a></li>
+            <li><a href="#kontakt" data-rel="dialog" data-icon="mail" data-theme="b">Kontakt</a></li>
             <li><a href="#oprogramie"  data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
         </ul>
     </div>
@@ -176,9 +176,9 @@ $( document ).ready(function() {
 				<span tal:content="kod" tal:omit-tag="">kod</span> <span tal:content="miasto" tal:omit-tag="">miasto</span><br/>
 				ul. <span tal:content="ulica" tal:omit-tag="">ulica</span> <span tal:content="numer" tal:omit-tag="">numer</span>
 			</div>
-			<a data-role="button" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
-			<a data-role="button" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>
-			<a tal:condition="tel2" data-role="button" href="tel:${tel2}" rel="external" style="margin:5px">Tel2: <span tal:condition="tel2" tal:content="tel2">telefon2</span></a>
+			<a data-role="button" data-icon="mail" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">mail</a>
+			<a data-role="button" data-icon="phone" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">telefon</span></a>
+			<a tal:condition="tel2" data-icon="phone" data-role="button" href="tel:${tel2}" rel="external" style="margin:5px">Tel2: <span tal:condition="tel2" tal:content="tel2">telefon2</span></a>
 			<a tal:condition="fax" data-role="button" href="tel:${fax}" rel="external" style="margin:5px">Fax: <span tal:condition="fax" tal:content="fax">fax</span></a>
 		</div>
     </div>
@@ -230,7 +230,7 @@ Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukoweg
     </div>
 	
 
-    <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji;" phptal:cache="0s"><a href='#' data-role='button' class='loadMore'>Załaduj więcej</a></div>
+    <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji;" phptal:cache="0s"><a href='#' data-role='button' data-icon="carat-d" class='loadMore'>Załaduj więcej</a></div>
 </div>
 <!-- /sekcja -->
 
