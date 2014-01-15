@@ -230,15 +230,20 @@ if (file_exists('config.xml')) {
 	
 	/* Zawartość specyficzna dla platform - Android/przeglądarka */
 	
-			 /* - Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
-				- Przycisk "Główna"; nie wyświetlany w aplikacji */
+			/*  
+				- MobiUwB w belce tytułowej na stronie głównej; nie wyświetlana w aplikacji
+				- Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
+				- Przycisk "Główna"; nie wyświetlany w aplikacji
+			*/
 				
 	// isset powinno być szybsze niż porównywanie wartości.
 	if (isset($_SESSION['client'])) {
+		$template->mobiuwb = '';
 		$template->offline = '';
 		$template->glowna = '';
 	}
 	else {
+		$template->mobiuwb = ' MobiUwB ';
 		$template->offline =
 			'        <!-- offline indicator - wskaźnik stanu połączenia z siecią (online/offline) -->
 	<script src=offline.min.js></script>
