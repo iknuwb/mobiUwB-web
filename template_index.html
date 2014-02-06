@@ -191,18 +191,18 @@ $( document ).ready(function() {
       </div>
         <div data-role="content">
             <div style="text-align: center">
-				<img src="logo128.png" alt="logo" tal:attributes="src logo_duze" />
+				<img src="mobiUwB.png" alt="logo" tal:attributes="src logo_aplikacji" />
             </div>
             <strong>Autorzy</strong>
     	    <ul>
 				<li tal:repeat="item opiekunowie" tal:content="item/imie">Imie i nazwisko opiekuna</li>
     	        <li tal:repeat="item autorzy" tal:content="item/imie">Imie i nazwisko autora</li>
     	    </ul>
-            <strong>Licencja:</strong>
+            <strong>Licencja</strong>
             <p>
  		  Program na licencji <strong>MIT</strong>.
             </p>
-            <strong>Podziękowania:</strong>
+            <strong>Podziękowania</strong>
             <p>
 Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukowego UwB oraz dyrekcji Instytutu Informatyki.
             </p>
@@ -229,7 +229,9 @@ Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukoweg
     </div>
 	
 
-    <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji;" phptal:cache="0s"><a href='#' data-role='button' data-icon="carat-d" class='loadMore'>Załaduj więcej</a></div>
+    <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji">
+		<a href="#" data-role="button" data-icon="carat-d" class="loadMore">Załaduj więcej</a>
+	</div>
 </div>
 <!-- /sekcja -->
 

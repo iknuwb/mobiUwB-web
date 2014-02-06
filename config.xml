@@ -9,6 +9,7 @@
 		<autor>Łukasz Szeremeta</autor>
 		<autor>Artur Szymański</autor>
 	</autorzy>
+	<logo_aplikacji>images/mobiUwB.png</logo_aplikacji>
 	<logo_male>images/logo32.png</logo_male>
 	<logo_srednie>images/logo64.png</logo_srednie>
 	<logo_duze>images/logo128.png</logo_duze>
@@ -16,7 +17,7 @@
 		<nazwa>Instytut Informatyki</nazwa>
 		<pelny_tytul>mobiUwB - Instytut Informatyki</pelny_tytul>
 		<apiUrl>http://ii.uwb.edu.pl/serwis/?/json/</apiUrl>
-		<!-- <logo_jednostki></logo_jednostki> --><!-- opcjonalny -->
+		<!-- <logo></logo> --><!-- opcjonalny -->
 		<sekcje>
 			<sekcja>
 				<tytul_sekcji>Aktualności</tytul_sekcji>

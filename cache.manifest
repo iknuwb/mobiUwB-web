@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2014-01-16 v10.7
+# 2014-02-06 v11.1
 
 NETWORK:
 *
@@ -30,6 +30,7 @@ images/icons-36-white.png
 images/logo32.png
 images/logo64.png
 images/logo128.png
+images/mobiUwB.png
 images/icons/ikona60.png
 images/icons/ikona76.png
 images/icons/ikona120.png

@@ -193,6 +193,7 @@ if (file_exists('config.xml')) {
 	
 	$template->nazwa = $config->jednostka[0]->nazwa;
 	$template->pelny_tytul = $config->jednostka[0]->pelny_tytul;
+	$template->logo_aplikacji = $config->logo_aplikacji;				// 128 x 128
 	
 	/* loga UwB */
 	$template->logo_male = $config->logo_male;				// 32 x 32
