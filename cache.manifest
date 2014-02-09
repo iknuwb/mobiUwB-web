@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2014-02-06 v11.1
+# 2014-02-09 v11.5
 
 NETWORK:
 *
@@ -37,8 +37,8 @@ images/icons/ikona120.png
 images/icons/ikona152.png
 
 js/custom-functions.js
-js/jquery-2.0.3.min.js
-js/jquery-2.0.3.min.map
+js/jquery-2.1.0.min.js
+js/jquery-2.1.0.min.map
 js/orangebox.min.js
 
 libs/Fancybox/blank.gif
