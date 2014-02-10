@@ -247,8 +247,8 @@ if (file_exists('config.xml')) {
 		$template->mobiuwb = ' MobiUwB ';
 		$template->offline =
 			'        <!-- offline indicator - wskaźnik stanu połączenia z siecią (online/offline) -->
-	<script src=offline.min.js></script>
-	<link rel=stylesheet href=offline-indicator.css>';
+	<script src=js/offline.min.js></script>
+	<link rel=stylesheet href=css/offline-indicator.css>';
 		$template->glowna = '<a href=glowna.php data-icon=home data-iconpos=left>Główna</a>';
 	}
 

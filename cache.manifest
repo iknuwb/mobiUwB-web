@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2014-02-09 v11.5
+# 2014-02-10 v11.7
 
 NETWORK:
 *
@@ -7,7 +7,6 @@ NETWORK:
 CACHE:
 #android.php
 template_index.html
-custom-style.css
 #glowna.php
 #index.php
 jquery.mobile-1.4.0.min.css
@@ -15,11 +14,11 @@ jquery.mobile-1.4.0.min.js
 jquery.mobile.structure-1.4.0.min.css
 jquery.mobile.theme-1.4.0.min.css
 jquery.mobile-1.4.0.min.map
-offline.min.js
-offline-indicator.css
 
 css/buttons.png
+css/custom-style.css
 css/loading.gif
+css/offline-indicator.css
 css/orangebox.css
 
 images/ajax-loader.gif
@@ -39,6 +38,7 @@ images/icons/ikona152.png
 js/custom-functions.js
 js/jquery-2.1.0.min.js
 js/jquery-2.1.0.min.map
+js/offline.min.js
 js/orangebox.min.js
 
 libs/Fancybox/blank.gif
