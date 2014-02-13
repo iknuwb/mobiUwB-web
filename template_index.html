@@ -86,7 +86,7 @@ $( document ).ready(function() {
 	
 	$.ajax({
         dataType: "json",
-        url: "http://ii.uwb.edu.pl/serwis/?/json/"+pg+"/6/6",
+        url: "${apiUrl}"+pg+"/6/6",
         success: function(data){
 		//console.log("klik - wiecej");
 		
