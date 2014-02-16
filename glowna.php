@@ -1,7 +1,6 @@
 <?php
 require_once './libs/PHPTAL.php';
 
-session_start();
 $template = new PHPTAL('template_index.html');
 $template->setOutputMode(PHPTAL::HTML5);
 
@@ -238,7 +237,7 @@ if (file_exists('config.xml')) {
 			*/
 				
 	// isset powinno być szybsze niż porównywanie wartości.
-	if (isset($_SESSION['client'])) {
+	if (isset($_COOKIE['client'])) {
 		$template->mobiuwb = '';
 		$template->offline = '';
 		$template->glowna = '';
