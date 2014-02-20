@@ -117,6 +117,7 @@ $( document ).ready(function() {
   });
 });
 
+<tal:block content="structure nowa_wersja"></tal:block>
 
 </script>
 
@@ -134,7 +135,8 @@ $( document ).ready(function() {
 				<img src="images/logo32.png" alt="Uniwersytet w Białymstoku" tal:attributes="src logo_male"/>
 				<img tal:condition="logo_jednostki" src="images/logo.png" alt="Instytut/Wydział" tal:attributes="src logo_jednostki; alt nazwa" />
 			</span> <span tal:content="mobiuwb"> MobiUwB </span>
-			<span tal:content="nazwa" class="nazwa">Instytut/Wydział</span></h1>
+			<span tal:content="nazwa" class="nazwa">Instytut/Wydział</span>
+		</h1>
     </div>
 
     <!-- content/ -->
@@ -154,8 +156,9 @@ $( document ).ready(function() {
     <div data-role="navbar" data-theme="b">
         <ul>
             <li><a href="#kontakt" data-rel="dialog" data-icon="mail" data-theme="b">Kontakt</a></li>
-            <li><a href="#oprogramie"  data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
+            <li><a href="#oprogramie" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
         </ul>
+		<a href="nowawersja.html" id="nowawersja" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b" style='display:none;'>Nowa wersja</a>
     </div>
 </div>
     <!-- /navbar -->
@@ -186,7 +189,7 @@ $( document ).ready(function() {
 
 <!-- /oprogramie -->
 <div data-role="page"  id="oprogramie" data-close-btn="right" data-theme="b">
-      <div data-role="header" data-theme="b" >
+      <div data-role="header" data-theme="b">
     	<h1>O programie</h1>
       </div>
         <div data-role="content">

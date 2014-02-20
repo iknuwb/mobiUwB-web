@@ -235,12 +235,23 @@ if (file_exists('config.xml')) {
 				- Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
 				- Przycisk "Główna"; nie wyświetlany w aplikacji
 			*/
-				
+
+	$template->nowa_wersja = '';
+			
 	// isset powinno być szybsze niż porównywanie wartości.
 	if (isset($_COOKIE['client'])) {
 		$template->mobiuwb = '';
 		$template->offline = '';
 		$template->glowna = '';
+		
+		// sprawdzamy czy użytkownik używa starej wersji aplikacji
+		if (isset($_COOKIE['wersja'])) {
+			$template->nowa_wersja = '$( document ).ready(function() {
+	setTimeout(function() {
+	$("#nowawersja").click();
+	}, 5000);
+});';
+		}
 	}
 	else {
 		$template->mobiuwb = ' MobiUwB ';
