@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2014-02-20 v12.9
+# 2014-03-11 v13.2
 
 NETWORK:
 *
@@ -28,13 +28,9 @@ images/icons-18-white.png
 images/icons-36-black.png
 images/icons-36-white.png
 images/logo32.png
-images/logo64.png
+#images/logo64.png
 images/logo128.png
 images/mobiUwB.png
-images/icons/ikona60.png
-images/icons/ikona76.png
-images/icons/ikona120.png
-images/icons/ikona152.png
 
 js/custom-functions.js
 js/jquery-2.1.0.min.js
