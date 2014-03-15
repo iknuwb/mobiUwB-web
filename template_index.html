@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="cache.manifest">
+<html manifest="cache.php">
 <head>
     <meta charset="utf-8" />
 	<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
@@ -117,6 +117,20 @@ $( document ).ready(function() {
      $( this ).remove(); //ukrywamy juz niepotrzebny przycisk
   });
 });
+
+// Sprawdza czy plik manifestu został zaktualizowany, jeżeli tak, strona jest odświeżana
+window.addEventListener('load', function(e) {
+
+  window.applicationCache.addEventListener('updateready', function(e) {
+    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+      // Przeglądarka odświeżyła cache. Przeładowujemy stronę.
+      window.location.reload();
+    } else {
+      // Manifest nie został zmieniony.
+    }
+  }, false);
+
+}, false);
 
 <tal:block content="structure nowa_wersja"></tal:block>
 
