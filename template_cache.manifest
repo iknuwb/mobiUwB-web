@@ -1,4 +1,4 @@
-# 2014-03-15 v14.5
+# 2014-03-24 v14.6
 
 NETWORK:
 *
@@ -17,7 +17,6 @@ css/buttons.png
 css/custom-style.css
 css/loading.gif
 css/offline-indicator.css
-css/orangebox.css
 
 images/ajax-loader.gif
 images/icons-png/arrow-u-white.png
@@ -37,7 +36,6 @@ js/custom-functions.js
 js/jquery-2.1.0.min.js
 #js/jquery-2.1.0.min.map
 js/offline.min.js
-js/orangebox.min.js
 
 libs/Fancybox/blank.gif
 libs/Fancybox/fancybox_loading.gif
