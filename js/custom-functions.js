@@ -44,7 +44,7 @@ function time () {
 
 //zliczamy zajecia odwolane
 $(function() {
-	$.getJSON('http://ii.uwb.edu.pl/api/serwis/?/json/sz', null, function(data){
+	$.getJSON('http://ii.uwb.edu.pl/serwis/?/json/sz', null, function(data){
 	var i = 0;
 	var teraz = new Date();
 	var wczesniej = new Date(teraz.getFullYear(), teraz.getMonth(), teraz.getDate()-3); // z trzech dni ?
