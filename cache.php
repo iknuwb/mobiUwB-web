@@ -1,6 +1,9 @@
 <?php
 header('Content-type: text/cache-manifest');
 
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie dla produkcji)
+
 // pobieramy aktualny czas (UNIXowy znacznik czasu)
 $czas = time();
 

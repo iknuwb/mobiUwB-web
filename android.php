@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie dla produkcji)
 
 // wejście z aplikacji mobilnej (Android)
 setcookie('client', 'Android');

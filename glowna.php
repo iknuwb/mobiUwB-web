@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie dla produkcji)
+
 require_once './libs/PHPTAL.php';
 
 $template = new PHPTAL('template_index.html');
