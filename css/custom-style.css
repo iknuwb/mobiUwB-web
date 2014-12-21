@@ -1,7 +1,11 @@
-/* Obecnie: nic nie robi
- * W planach: dodanie styli zwiaznych z wydzialem/uwb - jakies logo itp.
- * Zaczalem pisac, ale mi sie odechcialo; do zrobienia w najblizszym czasie ;)
- */
+/* Zmniejsza domyślne odstępy pomiędzy informacjami */
+.ui-content{
+    padding-top: 0em!important;
+    padding-bottom: 0em!important;
+    //padding-left: 1em;
+    //padding-right: 1em;
+}
+
 #start #app-top 
 {
     /*background-image: url(images/uwb-logo.png);*/
