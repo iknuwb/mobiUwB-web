@@ -1,4 +1,4 @@
-# 2014-10-16 v15.8
+# 2014-12-21 v16
 
 NETWORK:
 *
@@ -8,9 +8,9 @@ CACHE:
 template_index.html
 #glowna.php
 #index.php
-jquery.mobile-1.4.4.min.css
-jquery.mobile-1.4.4.min.js
-#jquery.mobile-1.4.4.min.map
+jquery.mobile-1.4.5.min.css
+jquery.mobile-1.4.5.min.js
+#jquery.mobile-1.4.5.min.map
 nowawersja.html
 
 css/buttons.png
@@ -33,8 +33,8 @@ images/logo128.png
 images/mobiUwB.png
 
 js/custom-functions.js
-js/jquery-2.1.1.min.js
-#js/jquery-2.1.1.min.map
+js/jquery-2.1.3.min.js
+#js/jquery-2.1.3.min.map
 js/offline.min.js
 
 libs/Fancybox/blank.gif
