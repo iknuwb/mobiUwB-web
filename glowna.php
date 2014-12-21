@@ -277,5 +277,3 @@ if (file_exists('config.xml')) {
 } else {
     exit('Nie mozna otworzyc pliku config.xml.');
 }
-
-?>

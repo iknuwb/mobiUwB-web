@@ -26,5 +26,3 @@ else{
 	// wczytujemy "stary" manifest
 	echo "CACHE MANIFEST\n# $ostatnia_aktualizacja\n".$manifest_template;
 }
-
-?>
