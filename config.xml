@@ -49,20 +49,20 @@
         <mapa>
             <tytul>Instytut Informatyki</tytul>
             <wspolrzedne>
-                <dlugosc>53.13051</dlugosc>
-                <szerokosc>23.143811</szerokosc>
+                <dlugosc>53.108316</dlugosc>
+                <szerokosc>23.15454</szerokosc>
             </wspolrzedne>
         </mapa>
         <adres>
-            <kod>15-887</kod>
+            <kod>15-245</kod>
             <miasto>Białystok</miasto>
-            <ulica>Sosnowa</ulica>
-            <numer>64</numer>
+            <ulica>Konstantego Ciołkowskiego</ulica>
+            <numer>1M</numer>
         </adres>
         <email>sekretariat(malpa)ii(kropka)uwb(kropka)edu(kropka)pl</email><!-- zamiast @-> (malpa) zamiast .-> (kropka) -->
-        <tel1>+48-85-745-7662</tel1>
+        <tel1>+48-85-738-8333</tel1>
         <!-- <tel2></tel2> --><!-- opcjonalny -->
-        <fax>+48-85-745-7662</fax><!-- opcjonalny -->
+        <fax>+48-85-738-8333</fax><!-- opcjonalny -->
         <plany>
             <pierwszy_stopien>
                 <plan>
