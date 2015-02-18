@@ -67,29 +67,25 @@
             <pierwszy_stopien>
                 <plan>
                     <opis>1 rok</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st1_sem1.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st1_sem2.pdf</link>
                 </plan>
                 <plan>
                     <opis>2 rok</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st1_sem3.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st1_sem4.pdf</link>
                 </plan>
                 <plan>
                     <opis>3 rok</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st1_sem5.pdf</link>
-                </plan>
-                <plan>
-                    <opis>3 rok (studia przemienne)</opis>
                     <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st1_sem6.pdf</link>
                 </plan>
             </pierwszy_stopien>
             <drugi_stopien>
                 <plan>
                     <opis>Rok 1</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st2_sem1.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st2_sem2.pdf</link>
                 </plan>
                 <plan>
                     <opis>Rok 2</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st2_sem3.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/file/2014_2015/plany/st2_sem4.pdf</link>
                 </plan>
             </drugi_stopien>
         </plany>
