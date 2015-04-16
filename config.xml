@@ -90,4 +90,33 @@
             </drugi_stopien>
         </plany>
     </jednostka>
+    <jednostka>
+        <nazwa>Wydział Filologiczny</nazwa>
+        <pelny_tytul>mobiUwB - Wydział Filologiczny</pelny_tytul>
+        <apiUrl>http://filologia.uwb.edu.pl/serwis/?/json/</apiUrl>
+        <!-- <logo></logo> --><!-- opcjonalny -->
+        <sekcje>
+            <sekcja licznik="tak"><!-- atrybut licznik - opcjonalny -->
+                <tytul_sekcji>Informacje</tytul_sekcji>
+                <id_sekcji>si</id_sekcji>
+            </sekcja>
+        </sekcje>
+        <mapa>
+            <tytul>Wydział Filologiczny</tytul>
+            <wspolrzedne>
+                <dlugosc>53.131437</dlugosc>
+                <szerokosc>23.154829</szerokosc>
+            </wspolrzedne>
+        </mapa>
+        <adres>
+            <kod>15-420</kod>
+            <miasto>Białystok</miasto>
+            <ulica>Plac Uniwersytecki</ulica>
+            <numer>1</numer>
+        </adres>
+        <email>infofil(malpa)uwb(kropka)edu(kropka)pl</email><!-- zamiast @-> (malpa) zamiast .-> (kropka) -->
+        <tel1>+48-85-745-7446</tel1>
+        <!-- <tel2></tel2> --><!-- opcjonalny -->
+        <fax>+48-85-745-7478</fax><!-- opcjonalny -->
+    </jednostka>
 </konfiguracja>
