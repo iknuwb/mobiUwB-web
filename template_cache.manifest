@@ -1,4 +1,4 @@
-# 2015-04-16 v18.0
+# 2015-04-30 v20.0
 
 NETWORK:
 *
@@ -6,6 +6,7 @@ NETWORK:
 CACHE:
 #android.php
 template_index.html
+#index.php
 #glowna.php
 jquery.mobile-1.4.5.min.css
 jquery.mobile-1.4.5.min.js
