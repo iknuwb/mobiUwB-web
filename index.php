@@ -1,13 +1,4 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie dla produkcji)
-
-require_once './libs/PHPTAL.php';
-
-$template = new PHPTAL('template_index.html');
-$template->setOutputMode(PHPTAL::HTML5);
-
 /*
  * Ustawienia początkowe
  * (obsługa wielu jednostek w jednej instancji)
@@ -35,6 +26,14 @@ switch ($_GET['place']) {
 
         break;
 }
+
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie dla produkcji)
+
+require_once './libs/PHPTAL.php';
+
+$template = new PHPTAL('template_index.html');
+$template->setOutputMode(PHPTAL::HTML5);
 
 /*
  * Załadowanie pliku konfiguracyjnego
@@ -108,7 +107,10 @@ foreach ($config->jednostka[$p]->plany->drugi_stopien->plan as $plan_IIst) {
     $plany_IIst[] = new Plan($plan_IIst->link, $plan_IIst->opis);
 }
 
-$template->apiUrl = $api_url = $config->jednostka[$p]->apiUrl;
+
+/* Ustawienie linku do API (JSON) */
+$api_url = $config->jednostka[$p]->apiUrl;
+$template->apiUrl = $api_url;
 
 class Sekcja {
 
@@ -130,6 +132,9 @@ class Sekcja {
 
 }
 
+// tworzymy tablice obiektow
+$sekcje = array();
+
 class Elementy {
 
     public $tresc;
@@ -143,9 +148,6 @@ class Elementy {
     }
 
 }
-
-// tworzymy tablice obiektow
-$sekcje = array();
 
 foreach ($config->jednostka[$p]->sekcje->sekcja as $sekcja) {
     $json = file_get_contents("$api_url" . $sekcja->id_sekcji . "/6/0"); //limit 6 z offsetem 0
@@ -176,7 +178,7 @@ foreach ($config->jednostka[$p]->sekcje->sekcja as $sekcja) {
     if ($sekcja['licznik'] != 'tak') {
         $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a>", $elementy, $ile, $wiecej);
     } else {
-        $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_sz\">0</span>", $elementy, $ile, $wiecej);
+        $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_$sekcja->id_sekcji\">0</span>", $elementy, $ile, $wiecej);
     }
 }
 

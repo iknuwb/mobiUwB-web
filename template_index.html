@@ -114,6 +114,24 @@ $( document ).ready(function() {
   });
 });
 
+// liczniki
+<tal:block tal:repeat="item sekcje">
+$(function () {
+    $.getJSON("${apiUrl}${item/id_sekcji}", null, function (data) {   
+        var i = 0;
+        var teraz = new Date();
+        var wczesniej = new Date(teraz.getFullYear(), teraz.getMonth(), teraz.getDate() - 3); // z trzech dni ?
+        $.each(data,
+                function (key, val) {
+                    var d = new Date(val.data);
+                    if (d > wczesniej)
+                        i++;
+                });      
+        $("#licznik_${item/id_sekcji}").html(i);
+    });
+});
+</tal:block>
+
 // Sprawdza czy plik manifestu został zaktualizowany, jeżeli tak, strona jest odświeżana
 window.addEventListener('load', function(e) {
 
