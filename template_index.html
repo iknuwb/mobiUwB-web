@@ -1,290 +1,261 @@
 <!DOCTYPE html>
 <html manifest="cache.php">
-<head>
-    <meta charset="utf-8" />
-	<meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-	<title tal:content="pelny_tytul">mobiUwB</title>
-	<link rel="shortcut icon" href="favicon.ico" />
-	<link rel="apple-touch-icon" href="images/ikona60.png" />
-	<link rel="apple-touch-icon" sizes="76x76" href="images/icons/ikona76.png" />
-	<link rel="apple-touch-icon" sizes="120x120" href="images/icons/ikona120.png" />
-	<link rel="apple-touch-icon" sizes="152x152" href="images/icons/ikona152.png" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="height=device-height,width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+        <title tal:content="pelny_tytul">mobiUwB</title>
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="apple-touch-icon" href="images/ikona60.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="images/icons/ikona76.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="images/icons/ikona120.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="images/icons/ikona152.png" />
 
-	<!-- jQuery i jQuery Mobile -->
-	<script src="js/jquery-2.1.3.min.js"></script>
-	<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
-	<script src="jquery.mobile-1.4.5.min.js"></script>
+        <!-- jQuery i jQuery Mobile -->
+        <script src="js/jquery-2.1.3.min.js"></script>
+        <link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+        <script src="jquery.mobile-1.4.5.min.js"></script>
 
-    <!-- fancybox - lightbox -->
-        
-	<script src="libs/Fancybox/jquery.fancybox.pack.js"></script>
-	<link rel="stylesheet" type="text/css" href="libs/Fancybox/jquery.fancybox.css" media="screen" />
-	<script>
-            $(document).ready(function() {
-                $('a[rel="lightbox"]').fancybox();
+        <!-- fancybox - lightbox -->
+
+        <script src="libs/Fancybox/jquery.fancybox.pack.js"></script>
+        <link rel="stylesheet" type="text/css" href="libs/Fancybox/jquery.fancybox.css" media="screen" />
+
+
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+        <!-- dodatkowe funkcje i style -->
+        <script src="js/custom-functions.js"></script>
+        <link rel="stylesheet" href="css/custom-style.css" />
+
+    <tal:block content="structure offline"></tal:block>
+
+    <script>
+        // funkcja odpowiedzialna za ladownanie mapy z api google
+        function initMap(lat,lng) {
+            var latlng = new google.maps.LatLng(lat, lng);
+            var myOptions = {
+              zoom: 16,
+              center: latlng,
+              mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: "${tytul}"
             });
-	</script>
+            google.maps.event.trigger(map, 'resize')
+        }
 
-
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-	
-    <!-- dodatkowe funkcje i style -->
-	<script src="js/custom-functions.js"></script>
-	<link rel="stylesheet" href="css/custom-style.css" />
-	
-	<tal:block content="structure offline"></tal:block>
-	
-<script>
-//ochrona przed spamem
-$( document ).ready(function() {
-  $('#poczta').each(function() {
-    var email = this.href.replace('(malpa)', '@').replace(/\(kropka\)/g, '.');
-    this.href = email;
-    $('#poczta').html(email.replace('mailto:', ''));  
-  });
-});
-
-// funkcja odpowiedzialna za ladownanie mapy z api google
-function initMap(lat,lng) {
-    var latlng = new google.maps.LatLng(lat, lng);
-    var myOptions = {
-      zoom: 16,
-      center: latlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-
-    var marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        title: "${tytul}"
-    });
-    google.maps.event.trigger(map, 'resize')
-}
-
-// zaladowanie mapy - mozna dopiero, jak DOM jest calkiem zaladowany
-// inaczej nie dostaniemy danych od google
-//$('#kontakt').on('pageshow',function(event){
-$(document).on('pageshow',function(event){
-    initMap(${dlugosc},${szerokosc});
-});
-
-
-//ladowanie wpisow 6..12
-$( document ).ready(function() {
-  //console.log("test");
-  
-  var output = "";
-  var pg0 ="";
-  $( ".wiecej" ).click(function() {
-    var pg = $( this ).data( "pg" );
-	pg0 = pg;
-    //console.log(pg);
-	
-	$.ajax({
-        dataType: "json",
-        url: "${apiUrl}"+pg+"/6/6",
-        success: function(data){
-		//console.log("klik - wiecej");
-		
-		// przechowuje elementy z newsami/informacjami
-		// będziemy zwracać string z całą treścią
-		output = "";
-	    $.each(data, function(key, val) {
-				// rozdzielamy string z data na tablice z konkretnymi czesciami
-				var d = (val.data).split(/[^0-9]/);
-
-				// FORMAT: DD.MM.YY (HH:MM)
-				var dateString = d[2] + '.' + [d[1]] + '.' + d[0] + ' (' + d[3] + ':' + d[5] + ')'; 
-
-				// wrzuca do tablicy HTML z divami "collapsible" (pozwalających na zwijanie i rozwijanie
-				output += '<div class="ui-content" data-role="content" role="main"><div class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content" data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data ui-collapsible-heading" data-inset="true"><a href="#" class="ui-collapsible-heading-toggle ui-btn ui-icon-arrow-u ui-btn-icon-left ui-btn-b">' + dateString
-				+ '<span class="ui-collapsible-heading-status"> click to collapse contents</span></a></h4><div aria-hidden="false" class="ui-collapsible-content ui-body-b"><div class="title">' + val.tytul
-				+ '</div><div class="tresc">' + val.tresc + '</div></div></div></div>';
+        // zaladowanie mapy - mozna dopiero, jak DOM jest calkiem zaladowany
+        // inaczej nie dostaniemy danych od google
+        //$('#kontakt').on('pageshow',function(event){
+        $(document).on('pageshow',function(event){
+            initMap(${dlugosc},${szerokosc});
         });
-    }, 
-    // wywołujemy synchronicznie
-    async: false
-    });  
-	
-		$( "div[data-pg=\"" + pg0 + "\"]").before( output );
-		//console.log(pg0);
 
-     $( this ).remove(); //ukrywamy juz niepotrzebny przycisk
-  });
-});
 
-// liczniki
-<tal:block tal:repeat="item sekcje">
-$(function () {
-    $.getJSON("${apiUrl}${item/id_sekcji}", null, function (data) {   
-        var i = 0;
-        var teraz = new Date();
-        var wczesniej = new Date(teraz.getFullYear(), teraz.getMonth(), teraz.getDate() - 3); // z trzech dni ?
-        $.each(data,
-                function (key, val) {
-                    var d = new Date(val.data);
-                    if (d > wczesniej)
-                        i++;
-                });      
-        $("#licznik_${item/id_sekcji}").html(i);
-    });
-});
-</tal:block>
+        //ladowanie wpisow 6..12
+        $( document ).ready(function() {
+          //console.log("test");
 
-// Sprawdza czy plik manifestu został zaktualizowany, jeżeli tak, strona jest odświeżana
-window.addEventListener('load', function(e) {
+          var output = "";
+          var pg0 ="";
+          $( ".wiecej" ).click(function() {
+            var pg = $( this ).data( "pg" );
+                pg0 = pg;
+            //console.log(pg);
 
-  window.applicationCache.addEventListener('updateready', function(e) {
-    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-      // Przeglądarka odświeżyła cache. Przeładowujemy stronę.
-      window.location.reload();
-    } else {
-      // Manifest nie został zmieniony.
-    }
-  }, false);
+                $.ajax({
+                dataType: "json",
+                url: "${apiUrl}"+pg+"/6/6",
+                success: function(data){
+                        //console.log("klik - wiecej");
 
-}, false);
+                        // przechowuje elementy z newsami/informacjami
+                        // będziemy zwracać string z całą treścią
+                        output = "";
+                    $.each(data, function(key, val) {
+                                        // rozdzielamy string z data na tablice z konkretnymi czesciami
+                                        var d = (val.data).split(/[^0-9]/);
 
-<tal:block content="structure nowa_wersja"></tal:block>
+                                        // FORMAT: DD.MM.YY (HH:MM)
+                                        var dateString = d[2] + '.' + [d[1]] + '.' + d[0] + ' (' + d[3] + ':' + d[5] + ')'; 
 
-</script>
+                                        // wrzuca do tablicy HTML z divami "collapsible" (pozwalających na zwijanie i rozwijanie
+                                        output += '<div class="ui-content" data-role="content" role="main"><div class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content" data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"><h4 class="data ui-collapsible-heading" data-inset="true"><a href="#" class="ui-collapsible-heading-toggle ui-btn ui-icon-arrow-u ui-btn-icon-left ui-btn-b">' + dateString
+                                        + '<span class="ui-collapsible-heading-status"> click to collapse contents</span></a></h4><div aria-hidden="false" class="ui-collapsible-content ui-body-b"><div class="title">' + val.tytul
+                                        + '</div><div class="tresc">' + val.tresc + '</div></div></div></div>';
+                });
+            }, 
+            // wywołujemy synchronicznie
+            async: false
+            });  
+
+                        $( "div[data-pg=\"" + pg0 + "\"]").before( output );
+                        //console.log(pg0);
+
+             $( this ).remove(); //ukrywamy juz niepotrzebny przycisk
+          });
+        });
+
+        // liczniki
+        <tal:block tal:repeat="item sekcje">
+        $(function () {
+            $.getJSON("${apiUrl}${item/id_sekcji}", null, function (data) {   
+                var i = 0;
+                var teraz = new Date();
+                var wczesniej = new Date(teraz.getFullYear(), teraz.getMonth(), teraz.getDate() - 3); // z trzech dni ?
+                $.each(data,
+                        function (key, val) {
+                            var d = new Date(val.data);
+                            if (d > wczesniej)
+                                i++;
+                        });      
+                $("#licznik_${item/id_sekcji}").html(i);
+            });
+        });
+        </tal:block>
+
+        <tal:block content="structure nowa_wersja"></tal:block>
+    </script>
 
 </head>
 
 <body>
 
-<!-- start/ -->
-<!-- strona główna - menu i linki w stopce -->
-<div data-role="page" id="start" data-theme="b">
+    <!-- start/ -->
+    <!-- strona główna - menu i linki w stopce -->
+    <div data-role="page" id="start" data-theme="b">
 
-    <div data-role="header" data-theme="b" id="app-top" data-position="fixed">
-        <h1 class="glowny">
-			<span data-form="ui-icon" class="ui-icon ui-icon-shadow" style="vertical-align: middle; display:inline-block">
-				<img src="images/logo32.png" alt="Uniwersytet w Białymstoku" tal:attributes="src logo_male"/>
-				<img tal:condition="logo_jednostki" src="images/logo.png" alt="Instytut/Wydział" tal:attributes="src logo_jednostki; alt nazwa" />
-			</span> <span tal:content="mobiuwb"> MobiUwB </span>
-			<span tal:content="nazwa" class="nazwa">Instytut/Wydział</span>
-		</h1>
+        <div data-role="header" data-theme="b" id="app-top" data-position="fixed">
+            <h1 class="glowny">
+                <span data-form="ui-icon" class="ui-icon ui-icon-shadow" style="vertical-align: middle; display:inline-block">
+                    <img src="images/logo32.png" alt="Uniwersytet w Białymstoku" tal:attributes="src logo_male"/>
+                    <img tal:condition="logo_jednostki" src="images/logo.png" alt="Instytut/Wydział" tal:attributes="src logo_jednostki; alt nazwa" />
+                </span> <span tal:content="mobiuwb"> MobiUwB </span>
+                <span tal:content="nazwa" class="nazwa">Instytut/Wydział</span>
+            </h1>
+        </div>
+
+        <!-- content/ -->
+        <div data-role="content" data-theme="b">
+
+            <ul data-role="listview" data-inset="true">
+                <li tal:repeat="item sekcje" tal:content="structure item/zawartosc"></li>
+                <li tal:repeat="item sekcje_statyczne"><a href="#${item/id_sekcji}" tal:content="item/tytul_sekcji">Sekcja statyczna</a></li>
+            </ul>
+
+        </div>
+        <!-- /content -->
+
+        <!-- navbar/ -->
+        <!-- Linki w "stopce" -->
+        <div data-role="footer" data-theme="b">
+            <div data-role="navbar" data-theme="b">
+                <ul>
+                    <li><a href="#kontakt" data-rel="dialog" data-icon="mail" data-theme="b">Kontakt</a></li>
+                    <li><a href="#oprogramie" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
+                </ul>
+                <a href="nowawersja.html" id="nowawersja" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b" style='display:none;'>Nowa wersja</a>
+            </div>
+        </div>
+        <!-- /navbar -->
+
+
+    </div> 
+    <!-- /start -->
+
+    <!-- /kontakt -->
+    <div data-role="page" id="kontakt" class="page-map" style="width:100%; height:100%;" data-close-btn="right" data-theme="b">
+        <div data-role="header" data-theme="b"><h1>Kontakt</h1></div>
+        <div data-role="content" style="padding:0;">
+            <div id="text" style="padding: 0 5px 3px 0">
+                <div class="adres">
+                    <strong><span tal:content="nazwa" tal:omit-tag="">Instytut/Wydział</span></strong><br/>
+                    <span tal:content="kod" tal:omit-tag="">Kod pocztowy</span> <span tal:content="miasto" tal:omit-tag="">Miasto</span><br/>
+                    ul. <span tal:content="ulica" tal:omit-tag="">Ulica</span> <span tal:content="numer" tal:omit-tag="">Numer budynku</span>
+                </div>
+                <a data-role="button" data-icon="mail" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">E-mail</a>
+                <a data-role="button" data-icon="phone" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">Telefon</span></a>
+                <a tal:condition="tel2" data-icon="phone" data-role="button" href="tel:${tel2}" rel="external" style="margin:5px">Tel2: <span tal:condition="tel2" tal:content="tel2">Telefon2</span></a>
+                <a tal:condition="fax" data-role="button" href="tel:${fax}" rel="external" style="margin:5px">Fax: <span tal:condition="fax" tal:content="fax">Fax</span></a>
+            </div>
+            <div id="map_canvas" style="width:400px; height:200px;margin:auto;"></div>
+        </div>
     </div>
+    <!-- /kontakt -->
 
-    <!-- content/ -->
-    <div data-role="content" data-theme="b">
-
-        <ul data-role="listview" data-inset="true">
-			<li tal:repeat="item sekcje" tal:content="structure item/zawartosc"></li>
-			<li tal:repeat="item sekcje_statyczne"><a href="#${item/id_sekcji}" tal:content="item/tytul_sekcji">Sekcja statyczna</a></li>
-        </ul>
-
-    </div>
-    <!-- /content -->
-
-    <!-- navbar/ -->
-    <!-- Linki w "stopce" -->
-<div data-role="footer" data-theme="b">
-    <div data-role="navbar" data-theme="b">
-        <ul>
-            <li><a href="#kontakt" data-rel="dialog" data-icon="mail" data-theme="b">Kontakt</a></li>
-            <li><a href="#oprogramie" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
-        </ul>
-		<a href="nowawersja.html" id="nowawersja" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b" style='display:none;'>Nowa wersja</a>
-    </div>
-</div>
-    <!-- /navbar -->
-    
-    
-</div> 
-<!-- /start -->
-
-<!-- /kontakt -->
-<div data-role="page" id="kontakt" class="page-map" style="width:100%; height:100%;" data-close-btn="right" data-theme="b">
-    <div data-role="header" data-theme="b"><h1>Kontakt</h1></div>
-    <div data-role="content" style="padding:0;">
-        <div id="text" style="padding: 0 5px 3px 0">
-			<div class="adres">
-				<strong><span tal:content="nazwa" tal:omit-tag="">Instytut/Wydział</span></strong><br/>
-				<span tal:content="kod" tal:omit-tag="">Kod pocztowy</span> <span tal:content="miasto" tal:omit-tag="">Miasto</span><br/>
-				ul. <span tal:content="ulica" tal:omit-tag="">Ulica</span> <span tal:content="numer" tal:omit-tag="">Numer budynku</span>
-			</div>
-			<a data-role="button" data-icon="mail" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">E-mail</a>
-			<a data-role="button" data-icon="phone" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">Telefon</span></a>
-			<a tal:condition="tel2" data-icon="phone" data-role="button" href="tel:${tel2}" rel="external" style="margin:5px">Tel2: <span tal:condition="tel2" tal:content="tel2">Telefon2</span></a>
-			<a tal:condition="fax" data-role="button" href="tel:${fax}" rel="external" style="margin:5px">Fax: <span tal:condition="fax" tal:content="fax">Fax</span></a>
-		</div>
-		<div id="map_canvas" style="width:400px; height:200px;margin:auto;"></div>
-    </div>
-</div>
-<!-- /kontakt -->
-
-<!-- /oprogramie -->
-<div data-role="page"  id="oprogramie" data-close-btn="right" data-theme="b">
-      <div data-role="header" data-theme="b">
-    	<h1>O programie</h1>
-      </div>
+    <!-- /oprogramie -->
+    <div data-role="page"  id="oprogramie" data-close-btn="right" data-theme="b">
+        <div data-role="header" data-theme="b">
+            <h1>O programie</h1>
+        </div>
         <div data-role="content">
             <div style="text-align: center">
-				<img src="mobiUwB.png" alt="logo" tal:attributes="src logo_aplikacji" />
+                <img src="mobiUwB.png" alt="logo" tal:attributes="src logo_aplikacji" />
             </div>
             <strong>Autorzy</strong>
-    	    <ul>
-				<li tal:repeat="item opiekunowie" tal:content="item/imie">Imie i nazwisko opiekuna</li>
-    	        <li tal:repeat="item autorzy" tal:content="item/imie">Imie i nazwisko autora</li>
-    	    </ul>
+            <ul>
+                <li tal:repeat="item opiekunowie" tal:content="item/imie">Imie i nazwisko opiekuna</li>
+                <li tal:repeat="item autorzy" tal:content="item/imie">Imie i nazwisko autora</li>
+            </ul>
             <strong>Licencja</strong>
             <p>
- 		  Program na licencji <strong>MIT</strong>.
+                Program na licencji <strong>MIT</strong>.
             </p>
             <strong>Podziękowania</strong>
             <p>
-Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukowego UwB oraz dyrekcji Instytutu Informatyki.
+                Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukowego UwB oraz dyrekcji Instytutu Informatyki.
             </p>
 
-    	</div>
+        </div>
 
-</div>
-<!-- /oprogramie -->
-
-<!-- sekcja/ -->
-<!-- miejsce, gdzie bedzie ladowana dynamiczna tresc -->
-<div class="strona" data-role="page" tal:repeat="item sekcje" tal:attributes="id item/id_sekcji; data-ile item/ilosc" data-theme="b">
-    <div tal:condition="item" data-role="header" data-theme="b" data-position="fixed">
-		<h1 tal:content="item/tytul_sekcji"></h1>
-        <tal:block content="structure glowna"></tal:block>
     </div>
+    <!-- /oprogramie -->
 
-    <div data-role="content" tal:repeat="item2 item/elementy">
-	<div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" tal:condition="item2">
-		<h4 class="data" data-inset="true" tal:content="item2/data">dateString</h4>
-		<div class="title" tal:content="item2/tytul">val.tytul</div>
-		<div class="tresc" tal:content="structure item2/tresc">val.tresc</div>
-	</div>
+    <!-- sekcja/ -->
+    <!-- miejsce, gdzie bedzie ladowana dynamiczna tresc -->
+    <div class="strona" data-role="page" tal:repeat="item sekcje" tal:attributes="id item/id_sekcji; data-ile item/ilosc" data-theme="b">
+        <div tal:condition="item" data-role="header" data-theme="b" data-position="fixed">
+            <h1 tal:content="item/tytul_sekcji"></h1>
+            <tal:block content="structure glowna"></tal:block>
+        </div>
+
+        <div data-role="content" tal:repeat="item2 item/elementy">
+            <div data-role="collapsible" data-collapsed="false" data-theme="b" data-content-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" tal:condition="item2">
+                <h4 class="data" data-inset="true" tal:content="item2/data">dateString</h4>
+                <div class="title" tal:content="item2/tytul">val.tytul</div>
+                <div class="tresc" tal:content="structure item2/tresc">val.tresc</div>
+            </div>
+        </div>
+
+
+        <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji">
+            <a href="#" data-role="button" data-icon="carat-d" class="loadMore">Załaduj więcej</a>
+        </div>
     </div>
-	
+    <!-- /sekcja -->
 
-    <div class="wiecej" tal:condition="item/wiecej" tal:attributes="data-pg item/id_sekcji">
-		<a href="#" data-role="button" data-icon="carat-d" class="loadMore">Załaduj więcej</a>
-	</div>
-</div>
-<!-- /sekcja -->
+    <!-- plan/ -->
+    <div data-role="page" id="plan" data-theme="b">
+        <div data-role="header" data-theme="b" data-position="fixed">
+            <h1>Plan zajęć</h1>
+            <tal:block content="structure glowna"></tal:block>
+        </div>
 
-<!-- plan/ -->
-<div data-role="page" id="plan" data-theme="b">
-    <div data-role="header" data-theme="b" data-position="fixed">
-        <h1>Plan zajęć</h1>
-        <tal:block content="structure glowna"></tal:block>
+        <div data-role="content">
+            <ul data-role="listview" data-inset="true" data-divider-theme="b">
+                <li data-role="list-divider">Studia I stopnia</li>
+                <li tal:repeat="item plany_Ist"><a href="http://***.uwb.edu.pl/pliki/file/***/plany/st1_sem*.pdf" data-ajax="false" tal:attributes="href item/link" tal:content="item/opis">Rok Ist</a></li>
+                <li data-role="list-divider">Studia II stopnia</li>
+                <li tal:repeat="item plany_IIst"><a href="http://***.uwb.edu.pl/pliki/file/***/plany/st2_sem*.pdf" data-ajax="false" tal:attributes="href item/link" tal:content="item/opis">Rok IIst</a></li>
+            </ul>
+        </div>
+
     </div>
-
-    <div data-role="content">
-        <ul data-role="listview" data-inset="true" data-divider-theme="b">
-            <li data-role="list-divider">Studia I stopnia</li>
-            <li tal:repeat="item plany_Ist"><a href="http://***.uwb.edu.pl/pliki/file/***/plany/st1_sem*.pdf" data-ajax="false" tal:attributes="href item/link" tal:content="item/opis">Rok Ist</a></li>
-            <li data-role="list-divider">Studia II stopnia</li>
-            <li tal:repeat="item plany_IIst"><a href="http://***.uwb.edu.pl/pliki/file/***/plany/st2_sem*.pdf" data-ajax="false" tal:attributes="href item/link" tal:content="item/opis">Rok IIst</a></li>
-        </ul>
-    </div>
-
-</div>
-<!-- /plan -->
+    <!-- /plan -->
 
 </body>
 </html>
