@@ -16,7 +16,7 @@ $( document ).ready(function() {
 window.addEventListener('load', function(e) {
 
   window.applicationCache.addEventListener('updateready', function(e) {
-    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+    if (window.applicationCache.status === window.applicationCache.UPDATEREADY) {
       // Przeglądarka odświeżyła cache. Przeładowujemy stronę.
       window.location.reload();
     } else {
