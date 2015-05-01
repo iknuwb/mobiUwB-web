@@ -101,7 +101,7 @@
         });
 
         // liczniki
-        <tal:block tal:repeat="item sekcje">
+        <tal:block tal:repeat="item sekcje_licznik">
         $(function () {
             $.getJSON("${apiUrl}${item/id_sekcji}", null, function (data) {   
                 var i = 0;

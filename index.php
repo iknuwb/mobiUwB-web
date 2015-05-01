@@ -134,6 +134,7 @@ class Sekcja {
 
 // tworzymy tablice obiektow
 $sekcje = array();
+$sekcje_licznik = array();
 
 class Elementy {
 
@@ -178,7 +179,7 @@ foreach ($config->jednostka[$p]->sekcje->sekcja as $sekcja) {
     if ($sekcja['licznik'] != 'tak') {
         $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a>", $elementy, $ile, $wiecej);
     } else {
-        $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_$sekcja->id_sekcji\">0</span>", $elementy, $ile, $wiecej);
+        $sekcje_licznik[] = $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_$sekcja->id_sekcji\">0</span>", $elementy, $ile, $wiecej);
     }
 }
 
@@ -210,6 +211,7 @@ $template->autorzy = $autorzy;
 $template->plany_Ist = $plany_Ist;
 $template->plany_IIst = $plany_IIst;
 $template->sekcje = $sekcje;
+$template->sekcje_licznik = $sekcje_licznik;
 $template->sekcje_statyczne = $sekcje_statyczne;
 
 $template->nazwa = $config->jednostka[$p]->nazwa;
