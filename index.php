@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Ustawienia początkowe
  * (obsługa wielu jednostek w jednej instancji)

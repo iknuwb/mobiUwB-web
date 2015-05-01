@@ -16,7 +16,6 @@
         <script src="jquery.mobile-1.4.5.min.js"></script>
 
         <!-- fancybox - lightbox -->
-
         <script src="libs/Fancybox/jquery.fancybox.pack.js"></script>
         <link rel="stylesheet" type="text/css" href="libs/Fancybox/jquery.fancybox.css" media="screen" />
 
@@ -30,7 +29,9 @@
     <tal:block content="structure offline"></tal:block>
 
     <script>
-        // funkcja odpowiedzialna za ladownanie mapy z api google
+        /*
+         * Ładowanie mapy (Google Maps API)
+         */
         function initMap(lat,lng) {
             var latlng = new google.maps.LatLng(lat, lng);
             var myOptions = {
@@ -56,7 +57,10 @@
         });
 
 
-        //ladowanie wpisow 6..12
+        /*
+         * Ładowanie wpisów 6..12
+         * (po kliknięciu "Załaduj więcej")
+         */
         $( document ).ready(function() {
           //console.log("test");
 
@@ -100,13 +104,16 @@
           });
         });
 
-        // liczniki
+
+        /*
+         * Liczniki nowych informacji
+         */
         <tal:block tal:repeat="item sekcje_licznik">
         $(function () {
             $.getJSON("${apiUrl}${item/id_sekcji}", null, function (data) {   
                 var i = 0;
                 var teraz = new Date();
-                var wczesniej = new Date(teraz.getFullYear(), teraz.getMonth(), teraz.getDate() - 3); // z trzech dni ?
+                var wczesniej = new Date(teraz.getFullYear(), teraz.getMonth(), teraz.getDate() - 3); // z trzech dni
                 $.each(data,
                         function (key, val) {
                             var d = new Date(val.data);
@@ -118,6 +125,11 @@
         });
         </tal:block>
 
+        /*
+         * Wyświetlenie informacji o nowej wersji aplikacji
+         * 
+         * Zachowanie kompatybilności wstecznej ze starą wersją testową aplikacji na Androida.
+         */
         <tal:block content="structure nowa_wersja"></tal:block>
     </script>
 
