@@ -23,11 +23,11 @@
                 <tytul_sekcji>Aktualności</tytul_sekcji>
                 <id_sekcji>io</id_sekcji>
             </sekcja>
-            <sekcja licznik="tak"><!-- atrybut licznik - opcjonalny -->
+            <sekcja licznik="tak" powiadomienia="tak"><!-- atrybuty: licznik, powiadomienia - opcjonalne -->
                 <tytul_sekcji>Zajęcia odwołane</tytul_sekcji>
                 <id_sekcji>sz</id_sekcji>
             </sekcja>
-            <sekcja>
+            <sekcja powiadomienia="tak">
                 <tytul_sekcji>Sprawy ogólne</tytul_sekcji>
                 <id_sekcji>so</id_sekcji>
             </sekcja>
@@ -96,7 +96,7 @@
         <apiUrl>http://filologia.uwb.edu.pl/serwis/?/json/</apiUrl>
         <!-- <logo></logo> --><!-- opcjonalny -->
         <sekcje>
-            <sekcja licznik="tak"><!-- atrybut licznik - opcjonalny -->
+            <sekcja licznik="tak" powiadomienia="tak"><!-- atrybuty: licznik, powiadomienia - opcjonalne -->
                 <tytul_sekcji>Informacje</tytul_sekcji>
                 <id_sekcji>si</id_sekcji>
             </sekcja>
