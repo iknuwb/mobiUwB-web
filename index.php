@@ -33,7 +33,7 @@ ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie
 
 require_once './libs/PHPTAL.php';
 
-$template = new PHPTAL('template_index.html');
+$template = new PHPTAL('./views/template_index.html');
 $template->setOutputMode(PHPTAL::HTML5);
 
 /*
@@ -206,6 +206,31 @@ foreach ($config->jednostka[$p]->sekcje_statyczne->sekcja_statyczna as $sekcja_s
  * Ustawianie danych pobranych z pliku konfiguracyjnego
  */
 
+
+
+/*
+ * Zawartość specyficzna dla platform
+ * 
+ * Android (client=android)
+ * WP (client=wp)
+ * Przeglądarka (client nie ustawiony)
+ * 
+ * Przeglądarka:
+ * + header
+ * + powrót do strony głównej
+ * + wskaźnik stanu połączenia offline/online
+ * + mapa Google
+ * + footer (w tym: kontakt, o programie)
+ * 
+ */
+
+if ($_GET['client'] == 'android' || $_GET['client'] == 'wp') {
+    $template->app = true;
+} else {
+    $template->app = false;
+    $template->place = $place;
+}
+
 $template->opiekunowie = $opiekunowie;
 $template->autorzy = $autorzy;
 
@@ -249,29 +274,6 @@ $template->tel1_ = $tel . $config->jednostka[$p]->tel1;
 // tutaj dla odmiany nie łączę - dałem tel:${tel2} w template_index.html
 $template->tel2 = $config->jednostka[$p]->tel2; // opcjonalne
 $template->fax = $config->jednostka[$p]->fax; // opcjonalne
-
-
-/*
- * Zawartość specyficzna dla platform
- * 
- * - MobiUwB w belce tytułowej na stronie głównej; nie wyświetlana w aplikacji
- * - Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
- * - Przycisk "Główna"; nie wyświetlany w aplikacji
- * 
- */
-
-// isset powinno być szybsze niż porównywanie wartości.
-if (isset($_GET['client'])) {
-    $template->mobiuwb = '';
-    $template->offline = '';
-    $template->glowna = '';
-} else {
-    $template->mobiuwb = ' MobiUwB ';
-    $template->offline = '        <!-- offline indicator - wskaźnik stanu połączenia z siecią (online/offline) -->
-	<script src=js/offline.min.js></script>
-	<link rel=stylesheet href=css/offline-indicator.css>';
-    $template->glowna = "<a href=./?place=$place data-icon=home data-iconpos=left>Główna</a>";
-}
 
 
 /*

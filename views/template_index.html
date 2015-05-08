@@ -26,37 +26,11 @@
         <script src="js/custom-functions.js"></script>
         <link rel="stylesheet" href="css/custom-style.css" />
 
-    <tal:block content="structure offline"></tal:block>
+        <span tal:condition="not: app" metal:use-macro="views/_offline.html/offline"/>
 
     <script>
-        /*
-         * Ładowanie mapy (Google Maps API)
-         */
-        function initMap(lat,lng) {
-            var latlng = new google.maps.LatLng(lat, lng);
-            var myOptions = {
-              zoom: 16,
-              center: latlng,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
-
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map,
-                title: "${tytul}"
-            });
-            google.maps.event.trigger(map, 'resize')
-        }
-
-        // zaladowanie mapy - mozna dopiero, jak DOM jest calkiem zaladowany
-        // inaczej nie dostaniemy danych od google
-        //$('#kontakt').on('pageshow',function(event){
-        $(document).on('pageshow',function(event){
-            initMap(${dlugosc},${szerokosc});
-        });
-
-
+        <span tal:condition="not: app" metal:use-macro="js/gmaps.js/gmaps"/>
+        
         /*
          * Ładowanie wpisów 6..12
          * (po kliknięciu "Załaduj więcej")
@@ -125,7 +99,7 @@
         });
         </tal:block>
     </script>
-
+    
 </head>
 
 <body>
@@ -134,15 +108,7 @@
     <!-- strona główna - menu i linki w stopce -->
     <div data-role="page" id="start" data-theme="b">
 
-        <div data-role="header" data-theme="b" id="app-top" data-position="fixed">
-            <h1 class="glowny">
-                <span data-form="ui-icon" class="ui-icon ui-icon-shadow" style="vertical-align: middle; display:inline-block">
-                    <img src="images/logo32.png" alt="Uniwersytet w Białymstoku" tal:attributes="src logo_male"/>
-                    <img tal:condition="logo_jednostki" src="images/logo.png" alt="Instytut/Wydział" tal:attributes="src logo_jednostki; alt nazwa" />
-                </span> <span tal:content="mobiuwb"> MobiUwB </span>
-                <span tal:content="nazwa" class="nazwa">Instytut/Wydział</span>
-            </h1>
-        </div>
+        <span tal:condition="not: app" metal:use-macro="views/_header.html/header"/>
 
         <!-- content/ -->
         <div data-role="content" data-theme="b">
@@ -155,77 +121,21 @@
         </div>
         <!-- /content -->
 
-        <!-- navbar/ -->
-        <!-- Linki w "stopce" -->
-        <div data-role="footer" data-theme="b">
-            <div data-role="navbar" data-theme="b">
-                <ul>
-                    <li><a href="#kontakt" data-rel="dialog" data-icon="mail" data-theme="b">Kontakt</a></li>
-                    <li><a href="#oprogramie" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b">O programie</a></li>
-                </ul>
-                <a href="nowawersja.html" id="nowawersja" data-rel="dialog" data-transition="pop" data-icon="info" data-theme="b" style='display:none;'>Nowa wersja</a>
-            </div>
-        </div>
-        <!-- /navbar -->
+        <span tal:condition="not: app" metal:use-macro="views/_footer.html/footer"/>
 
 
     </div> 
     <!-- /start -->
 
-    <!-- /kontakt -->
-    <div data-role="page" id="kontakt" class="page-map" style="width:100%; height:100%;" data-close-btn="right" data-theme="b">
-        <div data-role="header" data-theme="b"><h1>Kontakt</h1></div>
-        <div data-role="content" style="padding:0;">
-            <div id="text" style="padding: 0 5px 3px 0">
-                <div class="adres">
-                    <strong><span tal:content="nazwa" tal:omit-tag="">Instytut/Wydział</span></strong><br/>
-                    <span tal:content="kod" tal:omit-tag="">Kod pocztowy</span> <span tal:content="miasto" tal:omit-tag="">Miasto</span><br/>
-                    ul. <span tal:content="ulica" tal:omit-tag="">Ulica</span> <span tal:content="numer" tal:omit-tag="">Numer budynku</span>
-                </div>
-                <a data-role="button" data-icon="mail" href="mailto:sekretariat@ii.uwb.edu.pl" rel="external" id="poczta" style="margin:5px" tal:attributes="href mailto" tal:content="email">E-mail</a>
-                <a data-role="button" data-icon="phone" href="tel:+48-85-745-7662" rel="external" style="margin:5px" tal:attributes="href tel1_">Tel: <span tal:content="tel1">Telefon</span></a>
-                <a tal:condition="tel2" data-icon="phone" data-role="button" href="tel:${tel2}" rel="external" style="margin:5px">Tel2: <span tal:condition="tel2" tal:content="tel2">Telefon2</span></a>
-                <a tal:condition="fax" data-role="button" href="tel:${fax}" rel="external" style="margin:5px">Fax: <span tal:condition="fax" tal:content="fax">Fax</span></a>
-            </div>
-            <div id="map_canvas" style="width:400px; height:200px;margin:auto;"></div>
-        </div>
-    </div>
-    <!-- /kontakt -->
-
-    <!-- /oprogramie -->
-    <div data-role="page"  id="oprogramie" data-close-btn="right" data-theme="b">
-        <div data-role="header" data-theme="b">
-            <h1>O programie</h1>
-        </div>
-        <div data-role="content">
-            <div style="text-align: center">
-                <img src="mobiUwB.png" alt="logo" tal:attributes="src logo_aplikacji" />
-            </div>
-            <strong>Autorzy</strong>
-            <ul>
-                <li tal:repeat="item opiekunowie" tal:content="item/imie">Imie i nazwisko opiekuna</li>
-                <li tal:repeat="item autorzy" tal:content="item/imie">Imie i nazwisko autora</li>
-            </ul>
-            <strong>Licencja</strong>
-            <p>
-                Program na licencji <strong>MIT</strong>.
-            </p>
-            <strong>Podziękowania</strong>
-            <p>
-                Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukowego UwB oraz dyrekcji Instytutu Informatyki.
-            </p>
-
-        </div>
-
-    </div>
-    <!-- /oprogramie -->
+    <span tal:condition="not: app" metal:use-macro="views/_footer.html/kontakt"/>
+    <span tal:condition="not: app" metal:use-macro="views/_footer.html/oprogramie"/>
 
     <!-- sekcja/ -->
     <!-- miejsce, gdzie bedzie ladowana dynamiczna tresc -->
     <div class="strona" data-role="page" tal:repeat="item sekcje" tal:attributes="id item/id_sekcji; data-ile item/ilosc" data-theme="b">
         <div tal:condition="item" data-role="header" data-theme="b" data-position="fixed">
             <h1 tal:content="item/tytul_sekcji"></h1>
-            <tal:block content="structure glowna"></tal:block>
+            <span tal:condition="not: app" metal:use-macro="views/_glowna.html/glowna"/>
         </div>
 
         <div data-role="content" tal:repeat="item2 item/elementy">
@@ -247,7 +157,7 @@
     <div data-role="page" id="plan" data-theme="b">
         <div data-role="header" data-theme="b" data-position="fixed">
             <h1>Plan zajęć</h1>
-            <tal:block content="structure glowna"></tal:block>
+            <span tal:condition="not: app" metal:use-macro="views/_glowna.html/glowna"/>
         </div>
 
         <div data-role="content">

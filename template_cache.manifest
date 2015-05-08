@@ -1,10 +1,10 @@
-# 2015-05-08 v26.5
+# 2015-05-08 v30.0
 
 NETWORK:
 *
 
 CACHE:
-template_index.html
+views/template_index.html
 #index.php
 jquery.mobile-1.4.5.min.css
 jquery.mobile-1.4.5.min.js
