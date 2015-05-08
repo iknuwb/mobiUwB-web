@@ -260,8 +260,6 @@ $template->fax = $config->jednostka[$p]->fax; // opcjonalne
  * 
  */
 
-$template->nowa_wersja = '';
-
 // isset powinno być szybsze niż porównywanie wartości.
 if (isset($_GET['client'])) {
     $template->mobiuwb = '';
