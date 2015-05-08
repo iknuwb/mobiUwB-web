@@ -252,7 +252,7 @@ $template->fax = $config->jednostka[$p]->fax; // opcjonalne
 
 
 /*
- * Zawartość specyficzna dla platform - Android/przeglądarka
+ * Zawartość specyficzna dla platform
  * 
  * - MobiUwB w belce tytułowej na stronie głównej; nie wyświetlana w aplikacji
  * - Wskaźnik stanu połączenia z siecią; nie wyświetlany w aplikacji
@@ -263,19 +263,10 @@ $template->fax = $config->jednostka[$p]->fax; // opcjonalne
 $template->nowa_wersja = '';
 
 // isset powinno być szybsze niż porównywanie wartości.
-if (isset($_COOKIE['client'])) {
+if (isset($_GET['client'])) {
     $template->mobiuwb = '';
     $template->offline = '';
     $template->glowna = '';
-
-    // sprawdzamy czy użytkownik używa starej wersji aplikacji
-    if (isset($_COOKIE['wersja'])) {
-        $template->nowa_wersja = '$( document ).ready(function() {
-	setTimeout(function() {
-	$("#nowawersja").click();
-	}, 5000);
-});';
-    }
 } else {
     $template->mobiuwb = ' MobiUwB ';
     $template->offline = '        <!-- offline indicator - wskaźnik stanu połączenia z siecią (online/offline) -->
