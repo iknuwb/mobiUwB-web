@@ -14,7 +14,7 @@ function initMap(lat, lng) {
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        title: "${tytul}"
+        title: "${nazwa_jednostki}"
     });
     google.maps.event.trigger(map, 'resize')
 }

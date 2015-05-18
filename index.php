@@ -78,7 +78,7 @@ class Opiekun extends Autor {
 // tworzymy tablice obiektow
 $opiekun = array();
 
-foreach ($config->opiekun as $opiekun) {
+foreach ($config->opiekunowie->opiekun as $opiekun) {
     $opiekunowie[] = new Opiekun($opiekun);
 }
 
@@ -196,10 +196,9 @@ class SekcjaStatyczna extends Sekcja {
 // tworzymy tablice obiektow
 $sekcje_statyczne = array();
 
-foreach ($config->jednostka[$p]->sekcje_statyczne->sekcja_statyczna as $sekcja_statyczna) {
+foreach ($config->jednostka[$p]->sekcje->sekcja_statyczna as $sekcja_statyczna) {
     $sekcje_statyczne[] = new SekcjaStatyczna($sekcja_statyczna->id_sekcji, $sekcja_statyczna->tytul_sekcji);
 }
-
 
 
 /*
@@ -240,8 +239,7 @@ $template->sekcje = $sekcje;
 $template->sekcje_licznik = $sekcje_licznik;
 $template->sekcje_statyczne = $sekcje_statyczne;
 
-$template->nazwa = $config->jednostka[$p]->nazwa;
-$template->pelny_tytul = $config->jednostka[$p]->pelny_tytul;
+$template->nazwa_jednostki = $config->jednostka[$p]->nazwa;
 $template->logo_aplikacji = $config->logo_aplikacji;    // 128 x 128
 
 /* loga UwB */
@@ -252,7 +250,6 @@ $template->logo_duze = $config->logo_duze;    // 128 x 128
 $template->logo_jednostki = $config->jednostka[$p]->logo; // opcjonalne
 
 /* mapa */
-$template->tytul = $config->jednostka[$p]->mapa->tytul;
 $template->dlugosc = $config->jednostka[$p]->mapa->wspolrzedne->dlugosc;
 $template->szerokosc = $config->jednostka[$p]->mapa->wspolrzedne->szerokosc;
 

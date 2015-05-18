@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <konfiguracja xmlns="http://ii.uwb.edu.pl/serwis/konfiguracja/czesc2">
-    <opiekun>Dominik Tomaszuk</opiekun>
+    <opiekunowie>
+        <opiekun>Dominik Tomaszuk</opiekun>
+    </opiekunowie>
     <autorzy>
         <autor>Artem Barysevich</autor>
         <autor>Karol Borkowski</autor>
@@ -9,13 +11,12 @@
         <autor>Łukasz Szeremeta</autor>
         <autor>Artur Szymański</autor>
     </autorzy>
-    <logo_aplikacji>images/mobiUwB.png</logo_aplikacji>
-    <logo_male>images/logo32.png</logo_male>
-    <logo_srednie>images/logo64.png</logo_srednie>
-    <logo_duze>images/logo128.png</logo_duze>
+    <logo_aplikacji>images/logos/mobiUwB.png</logo_aplikacji>
+    <logo_male>images/logos/uwb32.png</logo_male>
+    <logo_srednie>images/logos/uwb64.png</logo_srednie>
+    <logo_duze>images/logos/uwb128.png</logo_duze>
     <jednostka xml:id="e9222687-ea40-5b1a-89ba-c595714d2bbb">
         <nazwa>Instytut Informatyki</nazwa>
-        <pelny_tytul>mobiUwB - Instytut Informatyki</pelny_tytul>
         <apiUrl>http://ii.uwb.edu.pl/serwis/?/json/</apiUrl>
         <!-- <logo></logo> --><!-- opcjonalny -->
         <sekcje>
@@ -39,15 +40,12 @@
                 <tytul_sekcji>Szkolenia i praktyki</tytul_sekcji>
                 <id_sekcji>sk</id_sekcji>
             </sekcja>
-        </sekcje>
-        <sekcje_statyczne>
             <sekcja_statyczna>
                 <tytul_sekcji>Plan zajęć</tytul_sekcji>
                 <id_sekcji>plan</id_sekcji>
             </sekcja_statyczna>
-        </sekcje_statyczne>
+        </sekcje>
         <mapa>
-            <tytul>Instytut Informatyki</tytul>
             <wspolrzedne>
                 <dlugosc>53.108316</dlugosc>
                 <szerokosc>23.15454</szerokosc>
@@ -92,7 +90,6 @@
     </jednostka>
     <jednostka xml:id="c6d2ed41-35c3-5ee6-a291-17d610da87a1">
         <nazwa>Wydział Filologiczny</nazwa>
-        <pelny_tytul>mobiUwB - Wydział Filologiczny</pelny_tytul>
         <apiUrl>http://filologia.uwb.edu.pl/serwis/?/json/</apiUrl>
         <!-- <logo></logo> --><!-- opcjonalny -->
         <sekcje>
@@ -102,7 +99,6 @@
             </sekcja>
         </sekcje>
         <mapa>
-            <tytul>Wydział Filologiczny</tytul>
             <wspolrzedne>
                 <dlugosc>53.131437</dlugosc>
                 <szerokosc>23.154829</szerokosc>
