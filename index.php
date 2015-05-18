@@ -177,7 +177,7 @@ foreach ($config->jednostka[$p]->sekcje->sekcja as $sekcja) {
         $elementy[] = new Elementy($s[$i]['tresc'], $s[$i]['tytul'], $polskadata);
     }
 
-    if ($sekcja['licznik'] != 'tak') {
+    if ($sekcja['licznik'] != 'true') {
         $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a>", $elementy, $ile, $wiecej);
     } else {
         $sekcje_licznik[] = $sekcje[] = new Sekcja($sekcja->id_sekcji, $sekcja->tytul_sekcji, "<a href=\"#$sekcja->id_sekcji\" class=$sekcja->id_sekcji>$sekcja->tytul_sekcji</a><span class=ui-li-count id=\"licznik_$sekcja->id_sekcji\">0</span>", $elementy, $ile, $wiecej);
