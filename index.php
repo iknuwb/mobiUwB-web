@@ -33,7 +33,7 @@ ini_set('display_errors', 0); // wyłączone wyświetlanie błędów (ustawienie
 
 require_once './libs/PHPTAL.php';
 
-$template = new PHPTAL('./views/template_index.html');
+$template = new PHPTAL('./views/template.html');
 $template->setOutputMode(PHPTAL::HTML5);
 
 /*
@@ -268,7 +268,7 @@ $template->tel1 = $config->jednostka[$p]->tel1;
 $tel = 'tel:';
 $template->tel1_ = $tel . $config->jednostka[$p]->tel1;
 
-// tutaj dla odmiany nie łączę - dałem tel:${tel2} w template_index.html
+// tutaj dla odmiany nie łączę - dałem tel:${tel2} w template.html
 $template->tel2 = $config->jednostka[$p]->tel2; // opcjonalne
 $template->fax = $config->jednostka[$p]->fax; // opcjonalne
 

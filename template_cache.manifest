@@ -1,10 +1,10 @@
-# 2015-09-29 v30.8
+# 2015-10-03 v30.9
 
 NETWORK:
 *
 
 CACHE:
-views/template_index.html
+views/template.html
 #index.php
 jquery.mobile-1.4.5.min.css
 jquery.mobile-1.4.5.min.js
@@ -30,8 +30,8 @@ images/logos/uwb128.png
 images/logos/mobiUwB.png
 
 js/custom-functions.js
-js/jquery-2.1.3.min.js
-#js/jquery-2.1.3.min.map
+js/jquery-2.1.4.min.js
+#js/jquery-2.1.4.min.map
 js/offline.min.js
 
 libs/Fancybox/blank.gif
