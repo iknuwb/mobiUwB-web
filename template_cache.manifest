@@ -1,4 +1,4 @@
-# 2015-10-03 v40
+# 2015-02-18 v40.1
 
 NETWORK:
 *
@@ -30,8 +30,8 @@ images/logos/uwb128.png
 images/logos/mobiUwB.png
 
 js/custom-functions.js
-js/jquery-2.1.4.min.js
-#js/jquery-2.1.4.min.map
+js/jquery-2.2.0.min.js
+#js/jquery-2.2.0.min.map
 js/offline.min.js
 
 libs/Fancybox/blank.gif
