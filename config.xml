@@ -65,25 +65,29 @@
             <pierwszy_stopien>
                 <plan>
                     <opis>1 rok</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2015_2016/plany/rozk_lato-sem2_st1.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/st1sem1.pdf</link>
                 </plan>
                 <plan>
                     <opis>2 rok</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2015_2016/plany/rozk_lato-sem4_st1.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/st%20I%20sem%203.pdf</link>
                 </plan>
                 <plan>
                     <opis>3 rok</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2015_2016/plany/rozk_lato-sem6_st1.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/st%20I%20sem%205.pdf</link>
                 </plan>
             </pierwszy_stopien>
             <drugi_stopien>
                 <plan>
-                    <opis>Rok 1</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2015_2016/plany/rozk_lato-sem2_st2.pdf</link>
+                    <opis>Rok 1 (TIiM)</opis>
+                    <link>http://ii.uwb.edu.pl/pliki/stII,%20sem1-TIiM.pdf</link>
+                </plan>
+                <plan>
+                    <opis>Rok 1 (GKiM)</opis>
+                    <link>http://ii.uwb.edu.pl/pliki/stII,%20sem1-GKiM.pdf</link>
                 </plan>
                 <plan>
                     <opis>Rok 2</opis>
-                    <link>http://ii.uwb.edu.pl/pliki/file/2015_2016/plany/rozk_lato-sem4_st2.pdf</link>
+                    <link>http://ii.uwb.edu.pl/pliki/st%202sem%203.pdf</link>
                 </plan>
             </drugi_stopien>
         </plany>
