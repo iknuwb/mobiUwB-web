@@ -1,0 +1,107 @@
+{% extends 'index.html.twig' %}
+{% block body %}
+<main>
+    <script>
+        var temp = false;
+        if(document.cookie == "") {
+            temp = true;
+        }
+    </script>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-sm-12 col-xs-12">
+            <div id="accordion">
+
+                {% for sekcja in sekcje %}
+                    <div class="card menu">
+                        <div class="card-header d-inline-flex" id="heading{{ loop.index }}collapse" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                            {{ sekcja.tytul_sekcji }}
+                            <div class="align-self-center d-flex ml-auto">
+                                <span class="badge badge-primary badge-pill" id="{{ sekcja.id_sekcji }}">0</span>
+                            </div>
+                        </div>
+                        <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}collapse" data-parent="#accordion">
+                            <div class="card-body">
+                                {% for key, id_sek in json %}
+                                        {% if key == sekcja.id_sekcji %}
+                                            <script>
+                                                if(temp == true){
+                                                    document.cookie = "{{ sekcja.id_sekcji }}={{ id_sek|length }}";
+                                                    //document.cookie = "{{ sekcja.id_sekcji }}={{ id_sek|length -2 }}";
+                                                } else {
+                                                    document.getElementById("{{ sekcja.id_sekcji }}").innerHTML = {{ id_sek|length }}-parseInt(getCookie_{{ sekcja.id_sekcji }}());
+                                                    document.cookie = "{{ sekcja.id_sekcji }}={{ id_sek|length}}";
+                                                }
+                                                function  getCookie_{{ sekcja.id_sekcji }}() {
+                                                    return document.cookie.replace(/(?:(?:^|.*;\s*){{ sekcja.id_sekcji }}\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+                                                }
+                                            </script>
+                                            {% for post in id_sek|slice(start, 5) %}
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        {{ post.data|date_modify("-1 hour")|date("d.m.Y (H:i:s)") }}
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p class="card-text">
+                                                            {{ post.tresc |replace({'<img' : '<img class="img-fluid"', '<a' : '<a style="color:007bff;" href'}) |raw }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                            <button type="button" class="btn btn-dark btn-block mb-2" onclick="ladowanie_{{ sekcja.id_sekcji }}()">Pokaż więcej</button>
+                                            <script>
+                                                function ladowanie_{{ sekcja.id_sekcji }}() {
+                                                    var ukryte_{{ sekcja.id_sekcji }} = document.getElementById("ukryte_{{ sekcja.id_sekcji }}");
+                                                    if(ukryte_{{ sekcja.id_sekcji }}.style.display == 'none'){
+                                                        ukryte_{{ sekcja.id_sekcji }}.style.display = 'block';
+                                                    } else {
+                                                        ukryte_{{ sekcja.id_sekcji }}.style.display = 'none';
+                                                    }
+                                                }
+                                            </script>
+                                             <div class="mt-3" style="display: none;" id="ukryte_{{ sekcja.id_sekcji }}">
+                                                 {% for ukryte in id_sek|slice(5, length) %}
+                                                     <div class="card">
+                                                         <div class="card-header">
+                                                             {{ ukryte.data|date_modify("-1 hour")|date("d.m.Y (H:i:s)") }}
+                                                         </div>
+                                                         <div class="card-body">
+                                                             <p class="card-text">
+                                                                 {{ ukryte.tresc |replace({'<img' : '<img class="img-fluid"', '<a' : '<a style="color:007bff;" href'}) |raw }}
+                                                             </p>
+                                                         </div>
+                                                     </div>
+                                                 {% endfor %}
+                                             </div>
+                                        {% endif %}
+                                {% endfor %}
+                                {% if sekcja.id_sekcji == "plan" %}
+                                    <div class="card text-center">
+                                        <div class="card-header">
+                                            Studia I stopnia
+                                        </div>
+                                        <div class="card-body">
+                                            {% for plan in plany_i_st.plan %}
+                                                <a style="color: white;" class="btn btn-dark btn-block mb-2" href="{{ plan.link }}" role="button">{{ plan.opis }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="card text-center">
+                                        <div class="card-header">
+                                            Studia II stopnia
+                                        </div>
+                                        <div class="card-body">
+                                            {% for plan in plany_ii_st.plan %}
+                                                <a style="color: white;" class="btn btn-dark btn-block mb-2" href="{{ plan.link }}" role="button">{{ plan.opis }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
