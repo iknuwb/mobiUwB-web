@@ -1,0 +1,75 @@
+body {
+    color: white;
+    background-color: #252525;
+}
+
+header {
+    padding: 20px;
+}
+
+.badge {
+    background-color: #232323;
+}
+footer {
+    margin-top: 20px;
+}
+
+.footer {
+    background-color: #333333;
+    border-color: black !important;
+}
+
+.footer:hover {
+    background-color: #373737;
+}
+
+.menu .card-header {
+    background-color: #333333;
+    border-radius: 0px;
+    text-decoration: none;
+}
+
+.menu .card-header:hover {
+    background-color: #373737;
+    color:#b8daff;
+}
+
+.menu .card-header:active {
+    color: #ffdf7e;
+}
+
+.menu .card-body {
+    background-color: #373737;
+}
+
+.menu .card-body .card {
+    border: none;
+    margin-bottom: 20px;
+}
+
+.menu .card-body .card .card-body {
+    background-color: #454545;
+}
+
+.menu .card-body .card .card-header:hover {
+    background-color: #333333;
+    color: white;
+}
+
+.menu .card-body .card .card-header:active {
+    color:white;
+}
+
+.menu {
+    border: none;
+    border-radius: 5px;
+}
+
+.card-footer {
+    background-color: transparent;
+    border: none;
+}
+
+.card-footer .card-header {
+    background-color: transparent;
+}

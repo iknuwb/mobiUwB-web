@@ -1,0 +1,68 @@
+<footer>
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-sm-6 col-xs-6 text-center footer border-right rounded-left" id="accordionFooter" data-toggle="collapse" data-target="#collapseContact" aria-expanded="true" aria-controls="collapseContact">
+            <div class="card card-footer">
+                <div class="card-header" id="headingContact" >
+                    <img src="dark/images/icons-png/mail-white.png" class="img-fluid" alt="Responsive image"> <br>
+                    Kontakt
+                </div>
+
+                <div id="collapseContact" class="collapse" aria-labelledby="headingContact" data-parent="#accordionFooter">
+                    <div class="card-body">
+                        <b>{{ instytut_nazwa }}</b> <br>
+                        {{ kod_poczta }} {{ miasto }} <br>
+                        ul. {{ ulica }} {{ numer_budynku }} <br>
+                        <div class="alert alert-dark d-flex bd-highlight mt-2" role="alert">
+                            <div class=" bd-highlight">
+                                <img src="dark/images/icons-png/mail-black.png">
+                            </div>
+                            <div class="flex-grow-1 bd-highlight" id="email">
+                                <!-- {{ email }} -->
+                            </div>
+                            <script>
+                                var x = "{{ email }}";
+                                document.getElementById('email').innerHTML = x.split('(kropka)').join('.').split('(malpa)').join("@");
+                            </script>
+                        </div>
+                        <div class="alert alert-dark d-flex bd-highlight" role="alert">
+                            <div class=" bd-highlight">
+                                <img src="dark/images/icons-png/phone-black.png">
+                            </div>
+                            <div class="flex-grow-1 bd-highlight">
+                                Tel: {{ num_telefon }}
+                            </div>
+                        </div>
+                        <div class="alert alert-dark" role="alert">
+                            Fax: {{ num_fax }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-6 col-xs-6 text-center footer border-right rounded-left" id="accordionFooter" data-toggle="collapse" data-target="#collapseContact" aria-expanded="true" aria-controls="collapseContact">
+            <div class="card card-footer">
+                <div class="card-header" id="headingContact" >
+                    <img src="dark/images/icons-png/info-white.png" class="img-fluid" alt="Responsive image"><br>
+                    O programie
+                </div>
+
+                <div id="collapseContact" class="collapse" aria-labelledby="headingContact" data-parent="#accordionFooter">
+                    <div class="card-body">
+                        <img src="dark/{{ logo_app }}" class="img-fluid" alt="Responsive image"> <br>
+                        <b>Autorzy</b><br>
+                        {% for opiekun in opiekunowie %}
+                            {{ opiekun }} (opiekun, autor) <br>
+                        {% endfor %}
+                        {% for autor in autorzy %}
+                            {{ autor }} (autor) <br>
+                        {% endfor %}
+                        <b>Licencja</b> <br>
+                        Program na licencji <b>MIT</b>. <br>
+                        <b>Podziękowania</b> <br>
+                        Autorzy pragną podziękować wszystkim członkom Informatycznego Koła Naukowego UwB oraz dyrekcji Instytutu Informatyki.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
